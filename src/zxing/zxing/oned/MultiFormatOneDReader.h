@@ -1,5 +1,5 @@
-#ifndef __MULTI_FORMAT_ONED_READER_H__
-#define __MULTI_FORMAT_ONED_READER_H__
+#ifndef ZXING_MULTI_FORMAT_ONED_READER_H
+#define ZXING_MULTI_FORMAT_ONED_READER_H
 /*
  *  MultiFormatOneDReader.h
  *  ZXing
@@ -30,9 +30,10 @@ namespace zxing {
     public:
       MultiFormatOneDReader(DecodeHints hints);
 
-      Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row);
+      Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row, DecodeHints hints);
     };
   }
 }
 
-#endif
+#endif // ZXING_MULTI_FORMAT_ONED_READER_H
+

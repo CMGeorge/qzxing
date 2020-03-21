@@ -1,6 +1,6 @@
 // -*- mode:c++; tab-width:2; indent-tabs-mode:nil; c-basic-offset:2 -*-
-#ifndef __BIT_ARRAY_H__
-#define __BIT_ARRAY_H__
+#ifndef ZXING_BIT_ARRAY_H
+#define ZXING_BIT_ARRAY_H
 
 /*
  *  Copyright 2010 ZXing authors. All rights reserved.
@@ -25,7 +25,6 @@
 #include <vector>
 #include <limits>
 #include <iostream>
-#include <vector>
 
 namespace zxing {
 
@@ -42,6 +41,7 @@ private:
 public:
     BitArray();
     BitArray(int size);
+    BitArray(std::vector<int> other);
     ~BitArray();
     int getSize() const;
     int getSizeInBytes() const;
@@ -74,9 +74,9 @@ public:
 
     void xor_(const BitArray& other);
 
-    void toBytes(int bitOffset, std::vector<byte>& array, int offset, int numBytes) const;
+    void toBytes(int bitOffset, std::vector<zxing::byte>& array, int offset, int numBytes) const;
 
-    const std::string toString() const;
+    std::string toString() const;
 
     static ArrayRef<int> makeArray(int size) {
         return ArrayRef<int>((size + 31) / 32);
@@ -100,4 +100,4 @@ std::ostream& operator << (std::ostream&, BitArray const&);
 
 }
 
-#endif // __BIT_ARRAY_H__
+#endif // ZXING_BIT_ARRAY_H

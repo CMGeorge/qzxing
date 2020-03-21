@@ -18,6 +18,7 @@
 
 #include <zxing/common/StringUtils.h>
 #include <zxing/DecodeHints.h>
+#include <sstream>
 
 using namespace std;
 using namespace zxing;
@@ -35,7 +36,7 @@ char const* const StringUtils::ISO88591 = "ISO8859-1";
 const bool StringUtils::ASSUME_SHIFT_JIS = false;
 
 string
-StringUtils::guessEncoding(byte* bytes, int length,
+StringUtils::guessEncoding(zxing::byte* bytes, int length,
                            Hashtable const& hints) {
   Hashtable::const_iterator i = hints.find(DecodeHints::CHARACTER_SET);
   if (i != hints.end()) {
@@ -64,11 +65,10 @@ StringUtils::guessEncoding(byte* bytes, int length,
   //int isoHighChars = 0;
   int isoHighOther = 0;
 
-  typedef byte byte;
   boolean utf8bom = length > 3 &&
-    bytes[0] == (byte) 0xEF &&
-    bytes[1] == (byte) 0xBB &&
-    bytes[2] == (byte) 0xBF;
+    bytes[0] == (zxing::byte) 0xEF &&
+    bytes[1] == (zxing::byte) 0xBB &&
+    bytes[2] == (zxing::byte) 0xBF;
 
   for (int i = 0;
        i < length && (canBeISO88591 || canBeShiftJIS || canBeUTF8);
@@ -195,4 +195,13 @@ StringUtils::guessEncoding(byte* bytes, int length,
   }
   // Otherwise, we take a wild guess with platform encoding
   return PLATFORM_DEFAULT_ENCODING;
+}
+
+string StringUtils::intToStr(int number)
+{
+    std::ostringstream ostr; //output string stream
+    ostr << number; //use the string stream just like cout,
+    //except the stream prints not to stdout but to a string.
+
+    return ostr.str(); //the str() function of the stream
 }

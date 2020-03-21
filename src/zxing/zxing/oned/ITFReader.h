@@ -1,6 +1,6 @@
 // -*- mode:c++; tab-width:2; indent-tabs-mode:nil; c-basic-offset:2 -*-
-#ifndef __ITF_READER_H__
-#define __ITF_READER_H__
+#ifndef ZXING_ITF_READER_H
+#define ZXING_ITF_READER_H
 
 /*
  *  Copyright 2010 ZXing authors All rights reserved.
@@ -43,7 +43,7 @@ private:
 			
   void append(char* s, char c);
 public:
-  Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row);
+  Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row, DecodeHints hints);
   ITFReader();
   ~ITFReader();
 };
@@ -51,4 +51,5 @@ public:
 }
 }
 
-#endif
+#endif // ZXING_ITF_READER_H
+

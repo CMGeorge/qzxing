@@ -13,17 +13,17 @@ void EncoderTests::execute()
 {
     testGetAlphanumericCode();
     testChooseMode();
-
     testAppendModeInfo();
-    testAppendLengthInfo();
     testAppendBytes();
-    testTerminateBits();
+    testAppendLengthInfo();
     testGetNumDataBytesAndNumECBytesForBlockID();
+    testTerminateBits();
     testInterleaveWithECBytes();
+    testGenerateECBytes();
     testAppendNumericBytes();
     testAppendAlphanumericBytes();
     testAppend8BitBytes();
-    testGenerateECBytes();
+    testEncode();
 }
 
 void EncoderTests::testGetAlphanumericCode()
@@ -58,21 +58,21 @@ void EncoderTests::testGetAlphanumericCode()
 void EncoderTests::testChooseMode()
 {
     // Numeric mode.
-    Mode mode_(EncoderHack::chooseMode("0"));
+    Mode mode_(EncoderHack::chooseMode(L"0"));
     assertSame(Mode::NUMERIC, mode_);
-    mode_ = EncoderHack::chooseMode("0123456789");
+    mode_ = EncoderHack::chooseMode(L"0123456789");
     assertSame(Mode::NUMERIC, mode_);
     // Alphanumeric mode.
-    mode_ = EncoderHack::chooseMode("A");
+    mode_ = EncoderHack::chooseMode(L"A");
     assertSame(Mode::ALPHANUMERIC, mode_);
-    mode_ = EncoderHack::chooseMode("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:");
+    mode_ = EncoderHack::chooseMode(L"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:");
     assertSame(Mode::ALPHANUMERIC, mode_);
     // 8-bit byte mode.
-    mode_ = EncoderHack::chooseMode("a");
+    mode_ = EncoderHack::chooseMode(L"a");
     assertSame(Mode::BYTE, mode_);
-    mode_ = EncoderHack::chooseMode("#");
+    mode_ = EncoderHack::chooseMode(L"#");
     assertSame(Mode::BYTE, mode_);
-    mode_ = EncoderHack::chooseMode("");
+    mode_ = EncoderHack::chooseMode(L"");
     assertSame(Mode::BYTE, mode_);
     // Kanji mode.  We used to use MODE_KANJI for these, but we stopped
     // doing that as we cannot distinguish Shift_JIS from other encodings
@@ -91,6 +91,41 @@ void EncoderTests::testChooseMode()
     //    assertSame(Mode::BYTE, mode_);
 }
 
+void EncoderTests::testEncode()
+{
+    Ref<QRCode> qrCode = Encoder::encode(L"ABCDEF", ErrorCorrectionLevel::H);
+    const std::string expected =
+            "<<\n"
+            " mode: ALPHANUMERIC\n"
+            " ecLevel: H\n"
+            " version: 1\n"
+            " maskPattern: 4\n"
+            " matrix:\n"
+            " 1 1 1 1 1 1 1 0 0 1 0 1 0 0 1 1 1 1 1 1 1\n"
+            " 1 0 0 0 0 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0 1\n"
+            " 1 0 1 1 1 0 1 0 0 0 0 0 0 0 1 0 1 1 1 0 1\n"
+            " 1 0 1 1 1 0 1 0 0 1 0 0 1 0 1 0 1 1 1 0 1\n"
+            " 1 0 1 1 1 0 1 0 0 1 0 1 0 0 1 0 1 1 1 0 1\n"
+            " 1 0 0 0 0 0 1 0 1 0 0 1 1 0 1 0 0 0 0 0 1\n"
+            " 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 1 1 1 1 1\n"
+            " 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0\n"
+            " 0 0 0 0 1 1 1 1 0 1 1 0 1 0 1 1 0 0 0 1 0\n"
+            " 0 0 0 0 1 1 0 1 1 1 0 0 1 1 1 1 0 1 1 0 1\n"
+            " 1 0 0 0 0 1 1 0 0 1 0 1 0 0 0 1 1 1 0 1 1\n"
+            " 1 0 0 1 1 1 0 0 1 1 1 1 0 0 0 0 1 0 0 0 0\n"
+            " 0 1 1 1 1 1 1 0 1 0 1 0 1 1 1 0 0 1 1 0 0\n"
+            " 0 0 0 0 0 0 0 0 1 1 0 0 0 1 1 0 0 0 1 0 1\n"
+            " 1 1 1 1 1 1 1 0 1 1 1 1 0 0 0 0 0 1 1 0 0\n"
+            " 1 0 0 0 0 0 1 0 1 1 0 1 0 0 0 1 0 1 1 1 1\n"
+            " 1 0 1 1 1 0 1 0 1 0 0 1 0 0 0 1 1 0 0 1 1\n"
+            " 1 0 1 1 1 0 1 0 0 0 1 1 0 1 0 0 0 0 1 1 1\n"
+            " 1 0 1 1 1 0 1 0 0 1 0 1 0 0 0 1 1 0 0 0 0\n"
+            " 1 0 0 0 0 0 1 0 0 1 0 0 1 0 0 1 1 0 0 0 1\n"
+            " 1 1 1 1 1 1 1 0 0 0 1 0 0 1 0 0 0 0 1 1 1\n"
+            ">>\n";
+    assertEquals(expected, qrCode->toString());
+}
+
 void EncoderTests::testAppendModeInfo()
 {
     BitArray bits;
@@ -102,19 +137,19 @@ void EncoderTests::testAppendLengthInfo()
 {
     BitArray bits;
     EncoderHack::appendLengthInfo(1,  // 1 letter (1/1).
-                                  *Version::getVersionForNumber(1),
+                                  Version::getVersionForNumber(1),
                                   Mode::NUMERIC,
                                   bits);
     assertEquals(" ........ .X", bits.toString());  // 10 bits.
     bits = BitArray();
     EncoderHack::appendLengthInfo(2,  // 2 letters (2/1).
-                                  *Version::getVersionForNumber(10),
+                                  Version::getVersionForNumber(10),
                                   Mode::ALPHANUMERIC,
                                   bits);
     assertEquals(" ........ .X.", bits.toString());  // 11 bits.
     bits = BitArray();
     EncoderHack::appendLengthInfo(255,  // 255 letter (255/1).
-                                  *Version::getVersionForNumber(27),
+                                  Version::getVersionForNumber(27),
                                   Mode::BYTE,
                                   bits);
     assertEquals(" ........ XXXXXXXX", bits.toString());  // 16 bits.
@@ -131,12 +166,12 @@ void EncoderTests::testAppendBytes()
     // Should use appendNumericBytes.
     // 1 = 01 = 0001 in 4 bits.
     BitArray bits;
-    EncoderHack::appendBytes("1", Mode::NUMERIC, bits, EncoderHack::DEFAULT_BYTE_MODE_ENCODING);
+    EncoderHack::appendBytes(L"1", Mode::NUMERIC, bits, EncoderHack::DEFAULT_BYTE_MODE_ENCODING);
     assertEquals(" ...X" , bits.toString());
     // Should use appendAlphanumericBytes.
     // A = 10 = 0xa = 001010 in 6 bits
     bits = BitArray();
-    EncoderHack::appendBytes("A", Mode::ALPHANUMERIC, bits, EncoderHack::DEFAULT_BYTE_MODE_ENCODING);
+    EncoderHack::appendBytes(L"A", Mode::ALPHANUMERIC, bits, EncoderHack::DEFAULT_BYTE_MODE_ENCODING);
     assertEquals(" ..X.X." , bits.toString());
     // Lower letters such as 'a' cannot be encoded in MODE_ALPHANUMERIC.
     ASSERT_THROWS(
@@ -145,10 +180,10 @@ void EncoderTests::testAppendBytes()
             // Should use append8BitBytes.
             // 0x61, 0x62, 0x63
             bits = BitArray();
-    EncoderHack::appendBytes("abc", Mode::BYTE, bits, EncoderHack::DEFAULT_BYTE_MODE_ENCODING);
+    EncoderHack::appendBytes(L"abc", Mode::BYTE, bits, EncoderHack::DEFAULT_BYTE_MODE_ENCODING);
     assertEquals(" .XX....X .XX...X. .XX...XX", bits.toString());
     // Anything can be encoded in QRCode.MODE_8BIT_BYTE.
-    EncoderHack::appendBytes("\0", Mode::BYTE, bits, EncoderHack::DEFAULT_BYTE_MODE_ENCODING);
+    EncoderHack::appendBytes(L"\0", Mode::BYTE, bits, EncoderHack::DEFAULT_BYTE_MODE_ENCODING);
     // Should use appendKanjiBytes.
     // 0x93, 0x5f
     //    bits = new BitArray();
@@ -227,9 +262,8 @@ void EncoderTests::testGetNumDataBytesAndNumECBytesForBlockID()
 
 void EncoderTests::testInterleaveWithECBytes()
 {
-    const byte arr[] = {32, 65, (byte)205, 69, 41, (byte)220, 46, (byte)128, (byte)236};
-    int length = getArrayLength(arr);
-    std::vector<byte> dataBytes (arr, arr + getArrayLength(arr));
+    const byte arr[] = {32, 65, 205, 69, 41, 220, 46, 128, 236};
+    std::vector<zxing::byte> dataBytes (arr, arr + getArrayLength(arr));
 
     BitArray in;
     for (byte dataByte: dataBytes) {
@@ -239,81 +273,85 @@ void EncoderTests::testInterleaveWithECBytes()
     BitArray* out = Encoder::interleaveWithECBytes(in, 26, 9, 1);
     const byte expected[] = {
         // Data bytes.
-        32, 65, (byte)205, 69, 41, (byte)220, 46, (byte)128, (byte)236,
+        32, 65, 205, 69, 41, 220, 46, 128, 236,
         // Error correction bytes.
-        42, (byte)159, 74, (byte)221, (byte)244, (byte)169, (byte)239, (byte)150, (byte)138, 70,
-        (byte)237, 85, (byte)224, 96, 74, (byte)219, 61,
+        42, 159, 74, 221, 244, 169, 239, 150, 138, 70,
+        237, 85, 224, 96, 74, 219, 61,
     };
     int expectedLength = getArrayLength(expected);
     assertEquals(expectedLength, out->getSizeInBytes());
-    std::vector<byte> outArray;
+    std::vector<zxing::byte> outArray;
     out->toBytes(0, outArray, 0, expectedLength);
+
     // Can't use Arrays.equals(), because outArray may be longer than out.sizeInBytes()
-    //    for (int x = 0; x < expectedLength; x++) {
-    //        assertEquals(expected[x], outArray[x]);  //throughs here => will be continued after all the tests
-    //    }
+    for (int x = 0; x < expectedLength; x++) {
+        assertEquals(expected[x], outArray[x]);  //throughs here => will be continued after all the tests
+    }
 
-    //    // Numbers are from http://www.swetake.com/qr/qr8.html
-    //    dataBytes = new byte[] {
-    //        67, 70, 22, 38, 54, 70, 86, 102, 118, (byte)134, (byte)150, (byte)166, (byte)182,
-    //                (byte)198, (byte)214, (byte)230, (byte)247, 7, 23, 39, 55, 71, 87, 103, 119, (byte)135,
-    //                (byte)151, (byte)166, 22, 38, 54, 70, 86, 102, 118, (byte)134, (byte)150, (byte)166,
-    //                (byte)182, (byte)198, (byte)214, (byte)230, (byte)247, 7, 23, 39, 55, 71, 87, 103, 119,
-    //                (byte)135, (byte)151, (byte)160, (byte)236, 17, (byte)236, 17, (byte)236, 17, (byte)236,
-    //                17
-    //    };
-    //    in = new BitArray();
-    //    for (byte dataByte: dataBytes) {
-    //        in.appendBits(dataByte, 8);
-    //    }
+    // Numbers are from http://www.swetake.com/qr/qr8.html
+    const byte arr2[] = {
+        67, 70, 22, 38, 54, 70, 86, 102, 118, 134, 150, 166, 182,
+        198, 214, 230, 247, 7, 23, 39, 55, 71, 87, 103, 119, 135,
+        151, 166, 22, 38, 54, 70, 86, 102, 118, 134, 150, 166,
+        182, 198, 214, 230, 247, 7, 23, 39, 55, 71, 87, 103, 119,
+        135, 151, 160, 236, 17, 236, 17, 236, 17, 236,
+        17
+    };
+    dataBytes = std::vector<zxing::byte>(arr2, arr2 + getArrayLength(arr2));
 
-    //    out = Encoder.interleaveWithECBytes(in, 134, 62, 4);
-    //    expected = new byte[] {
-    //        // Data bytes.
-    //        67, (byte)230, 54, 55, 70, (byte)247, 70, 71, 22, 7, 86, 87, 38, 23, 102, 103, 54, 39,
-    //                118, 119, 70, 55, (byte)134, (byte)135, 86, 71, (byte)150, (byte)151, 102, 87, (byte)166,
-    //                (byte)160, 118, 103, (byte)182, (byte)236, (byte)134, 119, (byte)198, 17, (byte)150,
-    //                (byte)135, (byte)214, (byte)236, (byte)166, (byte)151, (byte)230, 17, (byte)182,
-    //                (byte)166, (byte)247, (byte)236, (byte)198, 22, 7, 17, (byte)214, 38, 23, (byte)236, 39,
-    //                17,
-    //                // Error correction bytes.
-    //                (byte)175, (byte)155, (byte)245, (byte)236, 80, (byte)146, 56, 74, (byte)155, (byte)165,
-    //                (byte)133, (byte)142, 64, (byte)183, (byte)132, 13, (byte)178, 54, (byte)132, 108, 45,
-    //                113, 53, 50, (byte)214, 98, (byte)193, (byte)152, (byte)233, (byte)147, 50, 71, 65,
-    //                (byte)190, 82, 51, (byte)209, (byte)199, (byte)171, 54, 12, 112, 57, 113, (byte)155, 117,
-    //                (byte)211, (byte)164, 117, 30, (byte)158, (byte)225, 31, (byte)190, (byte)242, 38,
-    //                (byte)140, 61, (byte)179, (byte)154, (byte)214, (byte)138, (byte)147, 87, 27, 96, 77, 47,
-    //                (byte)187, 49, (byte)156, (byte)214,
-    //    };
-    //    assertEquals(expected.length, out.getSizeInBytes());
-    //    outArray = new byte[expected.length];
-    //    out.toBytes(0, outArray, 0, expected.length);
-    //    for (int x = 0; x < expected.length; x++) {
-    //        assertEquals(expected[x], outArray[x]);
-    //    }
+    in = BitArray();
+    foreach (byte dataByte, dataBytes) {
+        in.appendBits(dataByte, 8);
+    }
+
+    out = Encoder::interleaveWithECBytes(in, 134, 62, 4);
+    const byte expected2[] = {
+        // Data bytes.
+        67, 230, 54, 55, 70, 247, 70, 71, 22, 7, 86, 87, 38, 23, 102, 103, 54, 39,
+        118, 119, 70, 55, 134, 135, 86, 71, 150, 151, 102, 87, 166,
+        160, 118, 103, 182, 236, 134, 119, 198, 17, 150,
+        135, 214, 236, 166, 151, 230, 17, 182,
+        166, 247, 236, 198, 22, 7, 17, 214, 38, 23, 236, 39,
+        17,
+        // Error correction bytes.
+        175, 155, 245, 236, 80, 146, 56, 74, 155, 165,
+        133, 142, 64, 183, 132, 13, 178, 54, 132, 108, 45,
+        113, 53, 50, 214, 98, 193, 152, 233, 147, 50, 71, 65,
+        190, 82, 51, 209, 199, 171, 54, 12, 112, 57, 113, 155, 117,
+        211, 164, 117, 30, 158, 225, 31, 190, 242, 38,
+        140, 61, 179, 154, 214, 138, 147, 87, 27, 96, 77, 47,
+        187, 49, 156, 214,
+    };
+    expectedLength = getArrayLength(expected2);
+    assertEquals(expectedLength, out->getSizeInBytes());
+    outArray.clear();
+    out->toBytes(0, outArray, 0, expectedLength);
+    for (int x = 0; x < expectedLength; x++) {
+        assertEquals(expected2[x], outArray[x]);
+    }
 }
 
 void EncoderTests::testAppendNumericBytes()
 {
     // 1 = 01 = 0001 in 4 bits.
     BitArray bits;
-    Encoder::appendNumericBytes("1", bits);
+    Encoder::appendNumericBytes(L"1", bits);
     assertEquals(" ...X" , bits.toString());
     // 12 = 0xc = 0001100 in 7 bits.
     bits = BitArray();
-    Encoder::appendNumericBytes("12", bits);
+    Encoder::appendNumericBytes(L"12", bits);
     assertEquals(" ...XX.." , bits.toString());
     // 123 = 0x7b = 0001111011 in 10 bits.
     bits = BitArray();
-    Encoder::appendNumericBytes("123", bits);
+    Encoder::appendNumericBytes(L"123", bits);
     assertEquals(" ...XXXX. XX" , bits.toString());
     // 1234 = "123" + "4" = 0001111011 + 0100
     bits = BitArray();
-    Encoder::appendNumericBytes("1234", bits);
+    Encoder::appendNumericBytes(L"1234", bits);
     assertEquals(" ...XXXX. XX.X.." , bits.toString());
     // Empty.
     bits = BitArray();
-    Encoder::appendNumericBytes("", bits);
+    Encoder::appendNumericBytes(L"", bits);
     assertEquals("" , bits.toString());
 }
 
@@ -321,19 +359,19 @@ void EncoderTests::testAppendAlphanumericBytes()
 {
     // A = 10 = 0xa = 001010 in 6 bits
     BitArray bits;
-    Encoder::appendAlphanumericBytes("A", bits);
+    Encoder::appendAlphanumericBytes(L"A", bits);
     assertEquals(" ..X.X." , bits.toString());
     // AB = 10 * 45 + 11 = 461 = 0x1cd = 00111001101 in 11 bits
     bits = BitArray();
-    Encoder::appendAlphanumericBytes("AB", bits);
+    Encoder::appendAlphanumericBytes(L"AB", bits);
     assertEquals(" ..XXX..X X.X", bits.toString());
     // ABC = "AB" + "C" = 00111001101 + 001100
     bits = BitArray();
-    Encoder::appendAlphanumericBytes("ABC", bits);
+    Encoder::appendAlphanumericBytes(L"ABC", bits);
     assertEquals(" ..XXX..X X.X..XX. ." , bits.toString());
     // Empty.
     bits = BitArray();
-    Encoder::appendAlphanumericBytes("", bits);
+    Encoder::appendAlphanumericBytes(L"", bits);
     assertEquals("" , bits.toString());
     // Invalid data.
     bits = BitArray();
@@ -344,46 +382,53 @@ void EncoderTests::testAppendAlphanumericBytes()
 void EncoderTests::testAppend8BitBytes()
 {
     BitArray bits;
-    Encoder::append8BitBytes("abc", bits, Encoder::DEFAULT_BYTE_MODE_ENCODING);
+    Encoder::append8BitBytes(L"abc", bits, Encoder::DEFAULT_BYTE_MODE_ENCODING);
     assertEquals(" .XX....X .XX...X. .XX...XX", bits.toString());
     // Empty.
     bits = BitArray();
-    Encoder::append8BitBytes("", bits, Encoder::DEFAULT_BYTE_MODE_ENCODING);
+    Encoder::append8BitBytes(L"", bits, Encoder::DEFAULT_BYTE_MODE_ENCODING);
     assertEquals("", bits.toString());
 }
 
 void EncoderTests::testGenerateECBytes()
 {
-    const byte dataBytes_arr[] = {32, 65, (byte)205, 69, 41, (byte)220, 46, (byte)128, (byte)236};
-    std::vector<byte> dataBytes (dataBytes_arr, dataBytes_arr + getArrayLength(dataBytes_arr));
-    ArrayRef<byte> ecBytes = Encoder::generateECBytes(dataBytes, 17);
-    const int expected[] = {
+    std::vector<zxing::byte> dataBytes = {32, 65, 205, 69, 41, 220, 46, 128, 236};
+
+    ArrayRef<zxing::byte> ecBytes = Encoder::generateECBytes(dataBytes, 17);
+    byte expected[] = {
         42, 159, 74, 221, 244, 169, 239, 150, 138, 70, 237, 85, 224, 96, 74, 219, 61
     };
-    assertEquals( getArrayLength(expected), ecBytes.count());
+    assertEquals( getArrayLength(expected), ecBytes->size());
     for (int x = 0; x < getArrayLength(expected); x++) {
-        assertEquals(expected[x], ecBytes[x] & 0xFF);
+        assertEquals(expected[x], ecBytes[x]);
     }
-//    dataBytes = new byte[] {67, 70, 22, 38, 54, 70, 86, 102, 118,
-//        (byte)134, (byte)150, (byte)166, (byte)182, (byte)198, (byte)214};
-//    ecBytes = Encoder.generateECBytes(dataBytes, 18);
-//    expected = new int[] {
-//        175, 80, 155, 64, 178, 45, 214, 233, 65, 209, 12, 155, 117, 31, 140, 214, 27, 187
-//    };
-//    assertEquals(expected.length, ecBytes.length);
-//    for (int x = 0; x < expected.length; x++) {
-//        assertEquals(expected[x], ecBytes[x] & 0xFF);
-//    }
-//    // High-order zero coefficient case.
-//    dataBytes = new byte[] {32, 49, (byte)205, 69, 42, 20, 0, (byte)236, 17};
-//    ecBytes = Encoder.generateECBytes(dataBytes, 17);
-//    expected = new int[] {
-//        0, 3, 130, 179, 194, 0, 55, 211, 110, 79, 98, 72, 170, 96, 211, 137, 213
-//    };
-//    assertEquals(expected.length, ecBytes.length);
-//    for (int x = 0; x < expected.length; x++) {
-//        assertEquals(expected[x], ecBytes[x] & 0xFF);
-//    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    dataBytes =  {67, 70, 22, 38, 54, 70, 86, 102, 118,
+                  134, 150, 166, 182, 198, 214};
+    ecBytes = Encoder::generateECBytes(dataBytes, 18);
+    byte expected2[] = {
+        175, 80, 155, 64, 178, 45, 214, 233, 65, 209, 12, 155, 117, 31, 140, 214, 27, 187
+    };
+
+    assertEquals(getArrayLength(expected2), ecBytes->size());
+    for (int x = 0; x < getArrayLength(expected2); x++) {
+        assertEquals(expected2[x], ecBytes[x] );
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    // High-order zero coefficient case.
+    dataBytes = {32, 49, 205, 69, 42, 20, 0, 236, 17};
+    ecBytes = Encoder::generateECBytes(dataBytes, 17);
+    byte expected3[] = {
+        0, 3, 130, 179, 194, 0, 55, 211, 110, 79, 98, 72, 170, 96, 211, 137, 213
+    };
+    assertEquals(getArrayLength(expected3), ecBytes->size());
+    for (int x = 0; x < getArrayLength(expected3); x++) {
+        assertEquals(expected3[x], ecBytes[x]);
+    }
 }
 
 

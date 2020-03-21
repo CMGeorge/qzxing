@@ -1,9 +1,16 @@
 # Add more folders to ship with the application, here
+DEPLOYMENTFOLDERS = folder_01
 folder_01.source = qml/QZXingDragNDropTest
 folder_01.target = qml
-DEPLOYMENTFOLDERS = folder_01
 
 QT  += widgets
+
+CONFIG += qzxing_qml \
+          enable_decoder_1d_barcodes \
+          enable_decoder_qr_code \
+          enable_decoder_data_matrix \
+          enable_decoder_aztec \
+          enable_decoder_pdf17
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -36,7 +43,7 @@ SOURCES += main.cpp \
     droparea.cpp
 
 # Please do not modify the following two lines. Required for deployment.
-include(../../src/QZXing.pri)
+include(../../src/QZXing-components.pri)
 
 if(lessThan(QT_VERSION, 5.0)): {
     include(qmlapplicationviewer/qmlapplicationviewer.pri)

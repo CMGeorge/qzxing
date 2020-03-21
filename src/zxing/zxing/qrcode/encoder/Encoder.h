@@ -8,7 +8,7 @@
 #include <zxing/EncodeHint.h>
 
 #include <vector>
-#include <QString>
+#include <string>
 
 namespace zxing {
 namespace qrcode {
@@ -16,9 +16,9 @@ namespace qrcode {
 class Encoder {
 
 public:
-  static Ref<QRCode> encode(const QString& content, ErrorCorrectionLevel &ecLevel);
+  static Ref<QRCode> encode(const std::wstring& content, ErrorCorrectionLevel &ecLevel);
 
-  static Ref<QRCode> encode(const QString& content, ErrorCorrectionLevel &ecLevel, const EncodeHint* hints);
+  static Ref<QRCode> encode(const std::wstring& content, ErrorCorrectionLevel &ecLevel, const EncodeHint* hints);
 
   /**
    * @return the code point of the table used in alphanumeric mode or
@@ -30,7 +30,7 @@ public:
    * Choose the best mode by examining the content. Note that 'encoding' is used as a hint;
    * if it is Shift_JIS, and the input is only double-byte Kanji, then we return {@link Mode#KANJI}.
    */
-  static Mode chooseMode(const QString& content);
+  static Mode chooseMode(const std::wstring& content, const std::string& encoding = "");
 
   /**
    * Append mode info. On success, store the result in "bits".
@@ -40,15 +40,15 @@ public:
   /**
    * Append length info. On success, store the result in "bits".
    */
-  static void appendLengthInfo(int numLetters, const Version& version, const Mode& mode, BitArray& bits);
+  static void appendLengthInfo(int numLetters, const Ref<Version> version, const Mode& mode, BitArray& bits);
 
   /**
    * Append "bytes" in "mode" mode (encoding) into "bits". On success, store the result in "bits".
    */
-  static void appendBytes(const QString& content,
+  static void appendBytes(const std::wstring& content,
                           Mode& mode,
                           BitArray& bits,
-                          const QString& encoding);
+                          const std::string& encoding);
 
 protected:
   /**
@@ -77,19 +77,17 @@ protected:
                                         int numDataBytes,
                                         int numRSBlocks);
 
-  static ArrayRef<byte> generateECBytes(const std::vector<byte> &dataBytes, int numEcBytesInBlock);
+  static ArrayRef<zxing::byte> generateECBytes(const std::vector<zxing::byte> &dataBytes, int numEcBytesInBlock);
 
-  static void appendNumericBytes(const QString& content, BitArray& bits);
+  static void appendNumericBytes(const std::wstring& content, BitArray& bits);
 
-  static void appendAlphanumericBytes(const QString& content, BitArray& bits);
+  static void appendAlphanumericBytes(const std::wstring& content, BitArray& bits);
 
-  static void append8BitBytes(const QString& content, BitArray& bits, const QString& encoding);
+  static void append8BitBytes(const std::wstring& content, BitArray& bits, const std::string& encoding);
 
-  static void appendKanjiBytes(const QString& content, BitArray& bits);
+  static void appendKanjiBytes(const std::wstring& content, BitArray& bits);
 
-  static Mode chooseMode(const QString& content, const QString& encoding);
-
-  //static bool isOnlyDoubleByteKanji(const QString& content);
+  //static bool isOnlyDoubleByteKanji(const std::string& content);
 
 private:
   static int chooseMaskPattern(Ref<BitArray> bits,
@@ -107,6 +105,14 @@ private:
    */
   static int calculateMaskPenalty(const ByteMatrix& matrix);
 
+  static int calculateBitsNeeded(const Mode &mode, const BitArray &headerBits, const BitArray &dataBits, const
+                                 Ref<Version> version);
+  static bool willFit(int numInputBits, Ref<Version> version, const ErrorCorrectionLevel &ecLevel);
+  static Ref<Version> recommendVersion(ErrorCorrectionLevel &ecLevel,
+                                            Mode &mode,
+                                            BitArray &headerBits,
+                                            BitArray &dataBits);
+
   /**
    *  Encode "bytes" with the error correction level "ecLevel". The encoding mode will be chosen
    * internally by chooseMode(). On success, store the result in "qrCode".
@@ -123,7 +129,7 @@ private:
   static const int ALPHANUMERIC_TABLE[];
 
 public:  //should not be public, temp solution for tests
-  static const QString DEFAULT_BYTE_MODE_ENCODING;
+  static const std::string DEFAULT_BYTE_MODE_ENCODING;
 };
 
 }

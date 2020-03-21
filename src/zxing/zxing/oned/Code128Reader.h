@@ -1,6 +1,6 @@
 // -*- mode:c++; tab-width:2; indent-tabs-mode:nil; c-basic-offset:2 -*-
-#ifndef __CODE_128_READER_H__
-#define __CODE_128_READER_H__
+#ifndef ZXING_CODE_128_READER_H
+#define ZXING_CODE_128_READER_H
 /*
  *  Copyright 2010 ZXing authors All rights reserved.
  *
@@ -35,7 +35,7 @@ private:
                         int rowOffset);
 			
 public:
-  Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row);
+  Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row, DecodeHints hints);
   Code128Reader();
   ~Code128Reader();
 
@@ -45,4 +45,5 @@ public:
 }
 }
 
-#endif
+#endif // ZXING_CODE_128_READER_H
+

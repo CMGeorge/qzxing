@@ -35,8 +35,6 @@ using zxing::BinaryBitmap;
 using zxing::BitArray;
 using zxing::DecodeHints;
 
-OneDReader::OneDReader() {}
-
 Ref<Result> OneDReader::decode(Ref<BinaryBitmap> image, DecodeHints hints) {
   try {
     return doDecode(image, hints);
@@ -120,12 +118,10 @@ Ref<Result> OneDReader::doDecode(Ref<BinaryBitmap> image, DecodeHints hints) {
         row->reverse(); // reverse the row and continue
       }
 
-      // Java hints stuff missing
-
       try {
         // Look for a barcode
         // std::cerr << "rn " << rowNumber << " " << typeid(*this).name() << std::endl;
-        Ref<Result> result = decodeRow(rowNumber, row);
+        Ref<Result> result = decodeRow(rowNumber, row, hints);
         // We found our barcode
         if (attempt == 1) {
           // But it was upside down, so note that
@@ -159,7 +155,7 @@ int OneDReader::patternMatchVariance(vector<int>& counters,
 int OneDReader::patternMatchVariance(vector<int>& counters,
                                      int const pattern[],
                                      int maxIndividualVariance) {
-  int numCounters = counters.size();
+  int numCounters = int(counters.size());
   unsigned int total = 0;
   unsigned int patternLength = 0;
   for (int i = 0; i < numCounters; i++) {
@@ -193,7 +189,7 @@ int OneDReader::patternMatchVariance(vector<int>& counters,
 void OneDReader::recordPattern(Ref<BitArray> row,
                                int start,
                                vector<int>& counters) {
-  int numCounters = counters.size();
+  int numCounters = int(counters.size());
   for (int i = 0; i < numCounters; i++) {
     counters[i] = 0;
   }
@@ -223,6 +219,26 @@ void OneDReader::recordPattern(Ref<BitArray> row,
   if (!(counterPosition == numCounters || (counterPosition == numCounters - 1 && i == end))) {
     throw NotFoundException();
   }
+}
+
+void OneDReader::recordPatternInReverse(Ref<BitArray> row,
+                                        int start,
+                                        vector<int>& counters)
+{
+    // This could be more efficient I guess
+    int numTransitionsLeft = int(counters.size());
+    bool last = row->get(start);
+    while (start > 0 && numTransitionsLeft >= 0) {
+        if (row->get(--start) != last) {
+            numTransitionsLeft--;
+            last = !last;
+        }
+    }
+    if (numTransitionsLeft >= 0)
+    {
+        throw NotFoundException();
+    }
+    recordPattern(row, start + 1, counters);
 }
 
 OneDReader::~OneDReader() {}

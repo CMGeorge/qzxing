@@ -33,7 +33,7 @@ public:
 
     static CameraImageWrapper* Factory(const QImage& image, int maxWidth=-1, int maxHeight=-1, bool smoothTransformation=false);
     
-    QImage getOriginalImage();
+    ArrayRef<ArrayRef<zxing::byte> > getOriginalImage();
     Ref<GreyscaleLuminanceSource> getDelegate() { return delegate; }
 
     ArrayRef<zxing::byte> getRow(int y, ArrayRef<zxing::byte> row) const;
@@ -44,13 +44,21 @@ public:
     bool isRotateSupported() const;
     Ref<LuminanceSource> invert() const;
     Ref<LuminanceSource> rotateCounterClockwise() const;
+
+    inline zxing::byte gray(const unsigned int r, const unsigned int g, const unsigned int b);
   
 private:
     ArrayRef<zxing::byte> getRowP(int y, ArrayRef<zxing::byte> row) const;
     ArrayRef<zxing::byte> getMatrixP() const;
+    void updateImageAsGrayscale(const QImage &origin);
 
-    QImage image;
     Ref<GreyscaleLuminanceSource> delegate;
+    ArrayRef<ArrayRef<zxing::byte>> imageBytesPerRow;
+    ArrayRef<zxing::byte> imageBytes;
+
+    static const zxing::byte B_TO_GREYSCALE[256];
+    static const zxing::byte G_TO_GREYSCALE[256];
+    static const zxing::byte R_TO_GREYSCALE[256];
 };
 
 #endif //CAMERAIMAGE_H

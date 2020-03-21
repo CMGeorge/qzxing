@@ -1,8 +1,10 @@
 #include "DecodeValidator.h"
 
+#include <QDebug>
 #include <QFile>
 #include <QDirIterator>
 #include <QFileInfo>
+#include <QTextStream>
 
 #define LOG_OUTPUT_DIVIDER  "##############################################"
 #define LOG_SECTOR_TITLE(a)    '\n' << LOG_OUTPUT_DIVIDER\
@@ -23,6 +25,7 @@ void DecodeValidator::initializeDecoderCorrelation()
     decoderCorrelationMap["code39"] = QZXing::DecoderFormat_CODE_39;
     decoderCorrelationMap["code93"] = QZXing::DecoderFormat_CODE_93;
     decoderCorrelationMap["code128"] = QZXing::DecoderFormat_CODE_128;
+    decoderCorrelationMap["code128gs1"] = QZXing::DecoderFormat_CODE_128_GS1;
     decoderCorrelationMap["datamatrix"] = QZXing::DecoderFormat_DATA_MATRIX;
     decoderCorrelationMap["ean8"] = QZXing::DecoderFormat_EAN_8;
     decoderCorrelationMap["ean13"] = QZXing::DecoderFormat_EAN_13;
@@ -122,13 +125,13 @@ void DecodeValidator::printResults()
         if(failedResultLogs.size())
             qDebug() << "  failed image files:";
 
-        for(size_t i=0; i<failedResultLogs.size(); i++)
+        for(int i=0; i<failedResultLogs.size(); i++)
             qDebug() << '\t' << failedResultLogs[i];
 
         if(inconsistentResultLogs.size())
             qDebug() << "  inconsistent image files:";
 
-        for(size_t i=0; i<inconsistentResultLogs.size(); i++)
+        for(int i=0; i<inconsistentResultLogs.size(); i++)
             qDebug() << '\t' << inconsistentResultLogs[i];
     }
 

@@ -1,7 +1,7 @@
 #ifndef ENCODEVALIDATOR_H
 #define ENCODEVALIDATOR_H
 
-#include <QZXing.h>
+#include "QZXing.h"
 #include <memory>
 #include <vector>
 #include <map>
@@ -17,7 +17,7 @@ class EncodeValidator : public TestCase
 {
 public:
     EncodeValidator();
-    void execute();
+    void execute() override;
 };
 
 }

@@ -1,11 +1,12 @@
 #ifndef TESTCASE_H
 #define TESTCASE_H
 
-#include <QZXing.h>
+#include "QZXing.h"
 #include <zxing/Exception.h>
 #include <QtGlobal>
 #include <zxing/qrcode/decoder/Mode.h>
 #include "backward.hpp"
+#include <QDebug>
 #include <QStringList>
 
 namespace zxing{
@@ -45,12 +46,16 @@ private:
         return QString::number(item);
     }
 
-    static QString itemToString(byte item) {
+    static QString itemToString(zxing::byte item) {
         return QString::number(item);
     }
 
     static QString itemToString(qrcode::Mode& item) {
-        return QString::fromStdString(item.toString());
+        return QString::fromStdString(item.getName());
+    }
+
+    static QString itemToString(unsigned int item) {
+        return QString::number(item);
     }
 
 protected:
@@ -84,6 +89,10 @@ protected:
         assertEquals(expected_str, actual);
     }
 
+//    void assertEquals(int expected, int actual) {
+//        assertEquals(expected, actual);
+//    }
+
     void assertSame(qrcode::Mode &expected, qrcode::Mode &actual){
         assertEquals(expected, actual);
     }
@@ -101,10 +110,13 @@ protected:
     }
 
     void assertDataEquals(const std::string &message,
-                            const std::vector<int> &expected,
-                            const std::vector<int> & received)
+                            const std::vector<zxing::byte> &expected,
+                            const std::vector<zxing::byte> & received)
     {
-        for (int i = 0; i < expected.size(); i++) {
+        if(expected.size() != received.size())
+            assertTrue(false);
+
+        for (size_t i = 0; i < expected.size(); i++) {
             if (expected[i] != received[i]) {
                 qDebug() << QString::fromStdString(message) << ". Mismatch at " << QString::number(i) /*<< ". Expected " + arrayToString(expected) + ", got " +
                      arrayToString(Arrays.copyOf(received, expected.length)))*/;
@@ -113,10 +125,38 @@ protected:
         }
     }
 
+    void assertDataEquals(const std::string &message,
+                            const std::vector<zxing::byte> &expected,
+                            const ArrayRef<zxing::byte> &received)
+    {
+        if(int(expected.size()) != received->size())
+            assertTrue(false);
+
+        for (size_t i = 0; i < expected.size(); i++) {
+            if (expected[i] != received[i]) {
+                qDebug() << QString::fromStdString(message) << ". Mismatch at " << QString::number(i) /*<< ". Expected " + arrayToString(expected) + ", got " +
+                     arrayToString(Arrays.copyOf(received, expected.length)))*/;
+                assertTrue(false);
+            }
+        }
+    }
+
+    void assertDataEquals(const std::string &message,
+                            const std::vector<zxing::byte> &expected,
+                            const ArrayRef<int> &received)
+    {
+        ArrayRef<zxing::byte> received_copy(received->size());
+        for(int i=0; i<received_copy->size(); i++)
+            received_copy[i] = received[i];
+
+        assertDataEquals(message, expected, received_copy);
+    }
+
     static void initializeRandom();
     static int generateRandomNumber(int range);
 
 public:
+    virtual ~TestCase() {}
     virtual void execute()=0;
 };
 

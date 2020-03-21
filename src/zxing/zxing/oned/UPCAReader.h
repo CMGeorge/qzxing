@@ -1,6 +1,6 @@
 // -*- mode:c++; tab-width:2; indent-tabs-mode:nil; c-basic-offset:2 -*-
-#ifndef __UPCA_READER_H__
-#define __UPCA_READER_H__
+#ifndef ZXING_UPCA_READER_H
+#define ZXING_UPCA_READER_H
 /*
  *  UPCAReader.h
  *  ZXing
@@ -37,7 +37,7 @@ public:
 
   int decodeMiddle(Ref<BitArray> row, Range const& startRange, std::string& resultString);
 
-  Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row);
+  Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row, DecodeHints hints);
   Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row, Range const& startGuardRange);
   Ref<Result> decode(Ref<BinaryBitmap> image, DecodeHints hints);
 
@@ -47,4 +47,5 @@ public:
 }
 }
 
-#endif
+#endif // ZXING_UPCA_READER_H
+

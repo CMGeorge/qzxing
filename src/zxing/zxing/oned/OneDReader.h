@@ -1,6 +1,6 @@
 // -*- mode:c++; tab-width:2; indent-tabs-mode:nil; c-basic-offset:2 -*-
-#ifndef __ONED_READER_H__
-#define __ONED_READER_H__
+#ifndef ZXING_ONED_READER_H
+#define ZXING_ONED_READER_H
 
 /*
  *  OneDReader.h
@@ -22,6 +22,7 @@
  */
 
 #include <zxing/Reader.h>
+#include <zxing/DecodeHints.h>
 
 namespace zxing {
 namespace oned {
@@ -33,6 +34,17 @@ private:
 protected:
   static const int INTEGER_MATH_SHIFT = 8;
 
+  static int patternMatchVariance(std::vector<int>& counters,
+                                  std::vector<int> const& pattern,
+                                  int maxIndividualVariance);
+  static int patternMatchVariance(std::vector<int>& counters,
+                                  int const pattern[],
+                                  int maxIndividualVariance);
+
+protected:
+  static const int PATTERN_MATCH_RESULT_SCALE_FACTOR = 1 << INTEGER_MATH_SHIFT;
+
+public:
   struct Range {
   private:
     int data[2];
@@ -50,32 +62,24 @@ protected:
     }
   };
 
-  static int patternMatchVariance(std::vector<int>& counters,
-                                  std::vector<int> const& pattern,
-                                  int maxIndividualVariance);
-  static int patternMatchVariance(std::vector<int>& counters,
-                                  int const pattern[],
-                                  int maxIndividualVariance);
-
-protected:
-  static const int PATTERN_MATCH_RESULT_SCALE_FACTOR = 1 << INTEGER_MATH_SHIFT;
-
-public:
-
-  OneDReader();
   virtual Ref<Result> decode(Ref<BinaryBitmap> image, DecodeHints hints);
 
   // Implementations must not throw any exceptions. If a barcode is not found on this row,
   // a empty ref should be returned e.g. return Ref<Result>();
-  virtual Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row) = 0;
+  virtual Ref<Result> decodeRow(int rowNumber, Ref<BitArray> row, DecodeHints hints) = 0;
 
   static void recordPattern(Ref<BitArray> row,
                             int start,
                             std::vector<int>& counters);
+
+  static void recordPatternInReverse(Ref<BitArray> row,
+                                     int start,
+                                     std::vector<int>& counters);
   virtual ~OneDReader();
 };
 
 }
 }
 
-#endif
+#endif // ZXING_ONED_READER_H
+

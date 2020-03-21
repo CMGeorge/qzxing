@@ -1,8 +1,13 @@
-#include <jni.h>
 #include "native.h"
 #include <QMetaObject>
+#if defined(Q_OS_ANDROID)
+    #include <jni.h>
+#endif // Q_OS_ANDROID
+
 
 QObject *NativeHelpers::application_p_ = 0;
+
+#if defined(Q_OS_ANDROID)
 
 // define our native static functions
 // these are the functions that Java part will call directly from Android UI thread
@@ -45,3 +50,5 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* /*reserved*/)
 
     return JNI_VERSION_1_6;
 }
+
+#endif // Q_OS_ANDROID
