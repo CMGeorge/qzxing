@@ -20,16 +20,20 @@ CONFIG += \
           enable_decoder_data_matrix \
           enable_decoder_aztec \
           enable_decoder_pdf17 \
-          enable_encoder_qr_code
+          enable_encoder_qr_code \
           #staticlib
-          #qzxing_qml
-          #qzxing_multimedia
+          qzxing_qml \
+          qzxing_multimedia
 
-VERSION = 2.3
+#VERSION = 2.3
 
-TARGET = QZXing
-TEMPLATE = lib
+TARGET = qzxing
+#TEMPLATE = lib
 
 include(QZXing-components.pri)
 
-DEFINES -= DISABLE_LIBRARY_FEATURES
+#DEFINES -= DISABLE_LIBRARY_FEATURES
+
+load(qt_module)
+
+

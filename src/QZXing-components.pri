@@ -17,13 +17,14 @@
 CONFIG +=   qt warn_on
 
 DEFINES += QZXING_LIBRARY \
-        ZXING_ICONV_CONST \
-        DISABLE_LIBRARY_FEATURES
+        ZXING_ICONV_CONST
+        #\
+        #DISABLE_LIBRARY_FEATURES
 		 
 INCLUDEPATH  += $$PWD \
                 $$PWD/zxing
 
-HEADERS += $$PWD/QZXing_global.h \
+HEADERS += $$PWD/qzxing_global.h \
     $$PWD/CameraImageWrapper.h \
     $$PWD/ImageHandler.h \
     $$PWD/QZXing.h \
@@ -410,7 +411,7 @@ qzxing_multimedia {
     CONFIG += qzxing_qml
 
     DEFINES += QZXING_MULTIMEDIA
-	PRL_EXPORT_DEFINES += QZXING_MULTIMEDIA
+    PRL_EXPORT_DEFINES += QZXING_MULTIMEDIA
 
     HEADERS += \
         $$PWD/QZXingFilter.h
@@ -420,11 +421,12 @@ qzxing_multimedia {
 }
 
 qzxing_qml {
+
     greaterThan(QT_VERSION, 4.7): lessThan(QT_VERSION, 5.0): QT += declarative
     greaterThan(QT_MAJOR_VERSION, 4): QT += quick
 
     DEFINES += QZXING_QML
-	PRL_EXPORT_DEFINES += QZXING_QML
+    PRL_EXPORT_DEFINES += QZXING_QML
 
     HEADERS +=  \
         $$PWD/QZXingImageProvider.h
@@ -433,59 +435,44 @@ qzxing_qml {
         $$PWD/QZXingImageProvider.cpp
 }
 
-symbian {
-    TARGET.UID3 = 0xE618743C
-    TARGET.EPOCALLOWDLLDATA = 1
+#!symbian {
+#    isEmpty(PREFIX) {
+#        maemo5 {
+#            PREFIX = /opt/usr
+#        } else {
+#            PREFIX = /usr
+#        }
+#    }
 
-    #TARGET.CAPABILITY = All -TCB -AllFiles -DRM
-    TARGET.CAPABILITY += NetworkServices \
-        ReadUserData \
-        WriteUserData \
-        LocalServices \
-        UserEnvironment \
-        Location
-}
+#    DEFINES += NOFMAXL
 
-!symbian {
-    isEmpty(PREFIX) {
-        maemo5 {
-            PREFIX = /opt/usr
-        } else {
-            PREFIX = /usr
-        }
-    }
+#	# Installation
+#        headers.files = $$PWD/QZXing.h $$PWD/qzxing_global.h
+#	headers.path = $$PREFIX/include
+#	target.path = $$PREFIX/lib
+#	INSTALLS += headers target
 
-    DEFINES += NOFMAXL
+#	# pkg-config support
+#	CONFIG += create_pc create_prl no_install_prl
+#	QMAKE_PKGCONFIG_DESTDIR = pkgconfig
+#	QMAKE_PKGCONFIG_LIBDIR = ${prefix}/lib
+#	QMAKE_PKGCONFIG_INCDIR = ${prefix}/include
 
-	# Installation
-	headers.files = $$PWD/QZXing.h $$PWD/QZXing_global.h
-	headers.path = $$PREFIX/include
-	target.path = $$PREFIX/lib
-	INSTALLS += headers target
-
-	# pkg-config support
-	CONFIG += create_pc create_prl no_install_prl
-	QMAKE_PKGCONFIG_DESTDIR = pkgconfig
-	QMAKE_PKGCONFIG_LIBDIR = ${prefix}/lib
-	QMAKE_PKGCONFIG_INCDIR = ${prefix}/include
-
-	unix:QMAKE_CLEAN += -r pkgconfig lib$${TARGET}.prl
-}
+#	unix:QMAKE_CLEAN += -r pkgconfig lib$${TARGET}.prl
+#}
 
 win32-msvc*{
-
     DEFINES += __STDC_LIMIT_MACROS
 
     INCLUDEPATH += $$PWD/zxing/win32/zxing \
 	            $$PWD/zxing/win32/zxing/msvc
-    HEADERS += $$PWD/zxing/win32/zxing/msvc/stdint.h \
+    HEADERS += \#$$PWD/zxing/win32/zxing/msvc/stdint.h \
                 $$PWD/zxing/win32/zxing/iconv.h
 
     SOURCES += $$PWD/zxing/win32/zxing/win_iconv.c
 }
 
 win32-g++{
-
     INCLUDEPATH += $$PWD/zxing/win32/zxing
 
     HEADERS += $$PWD/zxing/win32/zxing/iconv.h
