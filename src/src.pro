@@ -31,7 +31,7 @@ TARGET = qzxing
 #TEMPLATE = lib
 
 include(QZXing-components.pri)
-
+MODULE=qzxing
 #DEFINES -= DISABLE_LIBRARY_FEATURES
 
 load(qt_module)
