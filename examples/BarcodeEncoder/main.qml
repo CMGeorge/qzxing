@@ -1,7 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.3
+//import QtQuick.Dialogs 1.3
+import Qt.labs.platform 1.1
 
 ApplicationWindow {
     id: mainWindow
@@ -21,7 +22,8 @@ ApplicationWindow {
                                  "?correctionLevel=" + errorCorrectionlevelCombo.currentText +
                                  "&format=" + formatCombo.currentText +
                                  "&border=" + (borderStatus.checkState !== Qt.Unchecked) +
-                                 "&transparent=" + (transparentStatus.checkState !== Qt.Unchecked)
+                                 "&transparent=" + (transparentStatus.checkState !== Qt.Unchecked) +
+                                 "&explicitSize=" + explicitSizeCombo.currentText
 
     property string normalUrl: "image://QZXing/encode/" + inputField.text
 
@@ -95,34 +97,38 @@ ApplicationWindow {
                 }
             }
 
-            Rectangle{
-                height: parent.height
-                width: borderStatus.width + colorPickerButton.width + 10
-
-                Column {
-                    Row {
-                        CheckBox {
-                            id: borderStatus
-                            text: "Border"
-                        }
-
-                        CheckBox {
-                            id: colorPickerButton
-                            text: "Color"
-
-                            background: Rectangle {
-                                color: barcodeRectangle.color
-                            }
-
-                            onCheckStateChanged: colorDialog.visible = true
-                        }
-                    }
-
-                    CheckBox {
-                        id: transparentStatus
-                        text: "Transparent"
-                    }
+            GroupBox {
+                id: explicitSizeGroupBox
+                title: "Explicit Size"
+                anchors.verticalCenter: parent.verticalCenter
+                ComboBox {
+                    id: explicitSizeCombo
+                    model: ["auto", "60", "120", "240"]
                 }
+            }
+        }
+
+        Row {
+            visible: mainWindow.isAdvancedOptionsEnabled
+            CheckBox {
+                id: borderStatus
+                text: "Border"
+            }
+
+            CheckBox {
+                id: colorPickerButton
+                text: "Color"
+
+                background: Rectangle {
+                    color: barcodeRectangle.color
+                }
+
+                onCheckStateChanged: colorDialog.visible = true
+            }
+
+            CheckBox {
+                id: transparentStatus
+                text: "Transparent"
             }
         }
 
@@ -140,8 +146,8 @@ ApplicationWindow {
             Image{
                 id:resultImage
                 anchors.centerIn: parent
-                sourceSize.width: barcodeRectangle.imageWidth
-                sourceSize.height: barcodeRectangle.imageWidth
+                sourceSize.width: 200
+                sourceSize.height: 200
 
                 source: mainLayout.getImageRequestString()
                 cache: false;

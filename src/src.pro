@@ -21,11 +21,11 @@ CONFIG += \
           enable_decoder_aztec \
           enable_decoder_pdf17 \
           enable_encoder_qr_code \
-          #staticlib
+          #staticlib \
           qzxing_qml \
           qzxing_multimedia
 
-#VERSION = 2.3
+VERSION = 3.2
 
 TARGET = qzxing
 #TEMPLATE = lib
