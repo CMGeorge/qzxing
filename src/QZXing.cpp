@@ -1,4 +1,4 @@
-#include "QZXing.h"
+#include "qzxing.h"
 
 #include <zxing/common/GlobalHistogramBinarizer.h>
 #include <zxing/Binarizer.h>
