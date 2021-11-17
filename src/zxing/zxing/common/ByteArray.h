@@ -20,7 +20,7 @@
 
 #include <vector>
 #include <cstdint>
-#include "Types.h"
+#include "types.h"
 
 namespace zxing {
 
