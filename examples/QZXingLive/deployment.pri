@@ -1,4 +1,4 @@
-unix:!android {
+unix:!android:!ios {
     isEmpty(target.path) {
         qnx {
             target.path = /tmp/$${TARGET}/bin

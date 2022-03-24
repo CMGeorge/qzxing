@@ -1,11 +1,12 @@
-TEMPLATE = app
-
-CONFIG += qzxing_multimedia \
-          enable_decoder_1d_barcodes \
-          enable_decoder_qr_code \
-          enable_decoder_data_matrix \
-          enable_decoder_aztec \
-          enable_decoder_pdf17
+#TEMPLATE = app
+TARGET=TestCam
+QT += qzxing
+#CONFIG += qzxing_multimedia \
+#          enable_decoder_1d_barcodes \
+#          enable_decoder_qr_code \
+#          enable_decoder_data_matrix \
+#          enable_decoder_aztec \
+#          enable_decoder_pdf17
 
 CONFIG(debug, debug|release) {
     CONFIG+=qml_debug
@@ -25,12 +26,12 @@ SOURCES += main.cpp \
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+#QML_IMPORT_PATH =
 
-include(../../src/QZXing-components.pri)
+#include(../../src/QZXing-components.pri)
 
 # Default rules for deployment.
-include(deployment.pri)
+#include(deployment.pri)
 
 android {
     QT += androidextras
@@ -57,4 +58,9 @@ android {
 else:ios {
   QMAKE_INFO_PLIST=Info.plist
 }
+
+## Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
 
