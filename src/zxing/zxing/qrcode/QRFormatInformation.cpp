@@ -20,7 +20,7 @@
 
 #include <zxing/qrcode/FormatInformation.h>
 #include <limits>
-#include <zxing/common/Types.h>
+#include <zxing/common/types.h>
 
 namespace zxing {
 namespace qrcode {

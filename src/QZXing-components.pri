@@ -82,7 +82,7 @@ HEADERS += $$PWD/QZXing_global.h \
     $$PWD/zxing/bigint/BigIntegerAlgorithms.hh \
     $$PWD/zxing/bigint/BigInteger.hh \
     $$PWD/zxing/zxing/WriterException.h \
-    $$PWD/zxing/zxing/common/Types.h
+    $$PWD/zxing/zxing/common/types.h
 
 SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/QZXing.cpp \

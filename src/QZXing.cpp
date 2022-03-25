@@ -1,4 +1,4 @@
-#include "QZXing.h"
+#include "qzxing.h"
 
 #include <zxing/common/GlobalHistogramBinarizer.h>
 #include <zxing/Binarizer.h>
@@ -9,7 +9,7 @@
 #include <zxing/common/detector/WhiteRectangleDetector.h>
 #include <zxing/InvertedLuminanceSource.h>
 #include "CameraImageWrapper.h"
-#include "ImageHandler.h"
+#include "imagehandler.h"
 #include <QTime>
 #include <QUrl>
 #include <QFileInfo>

@@ -31,7 +31,7 @@
 #endif
 
 #include <limits>
-#include "common/Types.h"
+#include "common/types.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 
