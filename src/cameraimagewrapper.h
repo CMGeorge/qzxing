@@ -17,6 +17,7 @@
 #ifndef CAMERAIMAGE_H
 #define CAMERAIMAGE_H
 
+#include <types.h>
 #include <QImage>
 #include <QString>
 #include <greyscaleluminancesource.h>

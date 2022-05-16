@@ -24,6 +24,10 @@ DEFINES += QZXING_LIBRARY \
 INCLUDEPATH  += $$PWD \
                 $$PWD/zxing
 
+#Added becaus of compile issue on windowd
+INCLUDEPATH += $$PWD/zxing/zxing/common/
+
+#error( $$PWD/zxing/zxing/common/)
 HEADERS += $$PWD/qzxing_global.h \
     $$PWD/CameraImageWrapper.h \
     $$PWD/ImageHandler.h \
@@ -83,7 +87,7 @@ HEADERS += $$PWD/qzxing_global.h \
     $$PWD/zxing/bigint/BigIntegerAlgorithms.hh \
     $$PWD/zxing/bigint/BigInteger.hh \
     $$PWD/zxing/zxing/WriterException.h \
-    $$PWD/zxing/zxing/common/Types.h
+    $$PWD/zxing/zxing/common/types.h
 
 SOURCES += $$PWD/CameraImageWrapper.cpp \
     $$PWD/QZXing.cpp \
