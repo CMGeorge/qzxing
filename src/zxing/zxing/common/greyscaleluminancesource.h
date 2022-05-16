@@ -20,8 +20,7 @@
  * limitations under the License.
  */
 
-#include "zxing/luminancesource.h"
-//#include <luminancesource.h>
+#include <luminancesource.h>
 
 namespace zxing {
 
