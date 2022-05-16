@@ -22,14 +22,18 @@ CONFIG += \
           enable_decoder_pdf17 \
           enable_encoder_qr_code \
           #staticlib \
-          #qzxing_qml \
-          #qzxing_multimedia \
+          qzxing_qml \
+          qzxing_multimedia
 
 VERSION = 3.3
 
-TARGET = QZXing
-TEMPLATE = lib
+TARGET = qzxing
+#TEMPLATE = lib
 
 include(QZXing-components.pri)
+MODULE=qzxing
+#DEFINES -= DISABLE_LIBRARY_FEATURES
 
-DEFINES -= DISABLE_LIBRARY_FEATURES
+load(qt_module)
+
+
