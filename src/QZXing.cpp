@@ -173,58 +173,58 @@ QString QZXing::decoderFormatToString(int fmt)
 {
     switch (fmt) {
     case DecoderFormat_Aztec:
-        return "AZTEC";
+        return QStringLiteral("AZTEC");
 
     case DecoderFormat_CODABAR:
-        return "CODABAR";
+        return QStringLiteral("CODABAR");
 
     case DecoderFormat_CODE_39:
-        return "CODE_39";
+        return QStringLiteral("CODE_39");
 
     case DecoderFormat_CODE_93:
-        return "CODE_93";
+        return QStringLiteral("CODE_93");
 
     case DecoderFormat_CODE_128:
-        return "CODE_128";
+        return QStringLiteral("CODE_128");
 
     case DecoderFormat_CODE_128_GS1:
-        return "CODE_128_GS1";
+        return QStringLiteral("CODE_128_GS1");
 
     case DecoderFormat_DATA_MATRIX:
-        return "DATA_MATRIX";
+        return QStringLiteral("DATA_MATRIX");
 
     case DecoderFormat_EAN_8:
-        return "EAN_8";
+        return QStringLiteral("EAN_8");
 
     case DecoderFormat_EAN_13:
-        return "EAN_13";
+        return QStringLiteral("EAN_13");
 
     case DecoderFormat_ITF:
-        return "ITF";
+        return QStringLiteral("ITF");
 
     case DecoderFormat_MAXICODE:
-        return "MAXICODE";
+        return QStringLiteral("MAXICODE");
 
     case DecoderFormat_PDF_417:
-        return "PDF_417";
+        return QStringLiteral("PDF_417");
 
     case DecoderFormat_QR_CODE:
-        return "QR_CODE";
+        return QStringLiteral("QR_CODE");
 
     case DecoderFormat_RSS_14:
-        return "RSS_14";
+        return QStringLiteral("RSS_14");
 
     case DecoderFormat_RSS_EXPANDED:
-        return "RSS_EXPANDED";
+        return QStringLiteral("RSS_EXPANDED");
 
     case DecoderFormat_UPC_A:
-        return "UPC_A";
+        return QStringLiteral("UPC_A");
 
     case DecoderFormat_UPC_E:
-        return "UPC_E";
+        return QStringLiteral("UPC_E");
 
     case DecoderFormat_UPC_EAN_EXTENSION:
-        return "UPC_EAN_EXTENSION";
+        return QStringLiteral("UPC_EAN_EXTENSION");
     } // switch
     return QString();
 }
@@ -436,7 +436,7 @@ QString QZXing::decodeImage(const QImage &image, int maxWidth, int maxHeight, bo
     else
         ciw = CameraImageWrapper::Factory(image, 999, 999, true);
 
-    QString errorMessage = "Unknown";
+    QString errorMessage = QStringLiteral("Unknown");
 
     QSharedPointer<LuminanceSource> imageRefOriginal = ciw;
     QSharedPointer<LuminanceSource> imageRef = imageRefOriginal;

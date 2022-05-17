@@ -17,13 +17,18 @@
 CONFIG +=   qt warn_on
 
 DEFINES += QZXING_LIBRARY \
-        ZXING_ICONV_CONST \
-        DISABLE_LIBRARY_FEATURES
+        ZXING_ICONV_CONST
+        #\
+        #DISABLE_LIBRARY_FEATURES
 		 
 INCLUDEPATH  += $$PWD \
                 $$PWD/zxing
 
-HEADERS += $$PWD/QZXing_global.h \
+#Added becaus of compile issue on windowd
+INCLUDEPATH += $$PWD/zxing/zxing/common/
+
+#error( $$PWD/zxing/zxing/common/)
+HEADERS += $$PWD/qzxing_global.h \
     $$PWD/CameraImageWrapper.h \
     $$PWD/ImageHandler.h \
     $$PWD/qzxing.h \
@@ -407,7 +412,7 @@ qzxing_multimedia {
     CONFIG += qzxing_qml
 
     DEFINES += QZXING_MULTIMEDIA
-	PRL_EXPORT_DEFINES += QZXING_MULTIMEDIA
+    PRL_EXPORT_DEFINES += QZXING_MULTIMEDIA
 
    lessThan(QT_VERSION, 6.2) {
         HEADERS += \
@@ -426,11 +431,12 @@ qzxing_multimedia {
 }
 
 qzxing_qml {
+
     greaterThan(QT_VERSION, 4.7): lessThan(QT_VERSION, 5.0): QT += declarative
     greaterThan(QT_MAJOR_VERSION, 4): QT += quick
 
     DEFINES += QZXING_QML
-	PRL_EXPORT_DEFINES += QZXING_QML
+    PRL_EXPORT_DEFINES += QZXING_QML
 
     HEADERS +=  \
         $$PWD/QZXingImageProvider.h
@@ -471,19 +477,17 @@ unix {
 }
 
 win32-msvc*{
-
     DEFINES += __STDC_LIMIT_MACROS
 
     INCLUDEPATH += $$PWD/zxing/win32/zxing \
 	            $$PWD/zxing/win32/zxing/msvc
-    HEADERS += $$PWD/zxing/win32/zxing/msvc/stdint.h \
+    HEADERS += \#$$PWD/zxing/win32/zxing/msvc/stdint.h \
                 $$PWD/zxing/win32/zxing/iconv.h
 
     SOURCES += $$PWD/zxing/win32/zxing/win_iconv.c
 }
 
 win32-g++{
-
     INCLUDEPATH += $$PWD/zxing/win32/zxing
 
     HEADERS += $$PWD/zxing/win32/zxing/iconv.h

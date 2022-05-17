@@ -32,7 +32,10 @@ TARGET = qzxing
 
 include(QZXing-components.pri)
 MODULE=qzxing
-DEFINES -= DISABLE_LIBRARY_FEATURES
+#DEFINES -= DISABLE_LIBRARY_FEATURES
+
+load(qt_module)
+
 
 load(qt_module)
 
