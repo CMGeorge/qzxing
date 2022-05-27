@@ -8,8 +8,8 @@
 #include <zxing/ResultMetadata.h>
 #include <zxing/common/detector/WhiteRectangleDetector.h>
 #include <zxing/InvertedLuminanceSource.h>
-#include "CameraImageWrapper.h"
-#include "ImageHandler.h"
+#include "cameraimagewrapper.h"
+#include "imagehandler.h"
 #include <QTime>
 #include <QUrl>
 #include <QFileInfo>
@@ -44,7 +44,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQuickImageProvider>
-#include "QZXingImageProvider.h"
+#include "qzxingimageprovider.h"
 #endif //QZXING_QML
 
 
@@ -52,6 +52,7 @@ using namespace zxing;
 
 QZXing::QZXing(QObject *parent) : QObject(parent), tryHarder_(false), lastDecodeOperationSucceded_(false)
 {
+    qCritical() << "Will use" << VERSION << " - 1";
     decoder = new MultiFormatReader();
     setDecoder(DecoderFormat_QR_CODE |
                DecoderFormat_DATA_MATRIX |

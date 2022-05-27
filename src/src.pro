@@ -26,7 +26,7 @@ CONFIG += \
           qzxing_multimedia
 
 VERSION = 3.3
-
+DEFINES +=VERSION=$$VERSION
 TARGET = qzxing
 #TEMPLATE = lib
 

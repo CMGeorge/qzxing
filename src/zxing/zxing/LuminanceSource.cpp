@@ -19,7 +19,7 @@
  */
 
 #include <sstream>
-#include <zxing/LuminanceSource.h>
+#include <zxing/luminancesource.h>
 #include <zxing/InvertedLuminanceSource.h>
 #include <zxing/common/IllegalArgumentException.h>
 
