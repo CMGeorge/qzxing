@@ -1,5 +1,5 @@
 #include "zxing/ZXing.h"
-#include "QZXingFilter.h"
+#include "qzxingfilter.h"
 
 #include <QDebug>
 #include <QtConcurrent/QtConcurrent>
@@ -45,6 +45,8 @@ QZXingFilter::QZXingFilter(QObject *parent)
     , decoding(false)
     , orientation_(0)
 {
+    qCritical() << "Will use QZXingFilter " << VERSION << " - 1";
+
     /// Connecting signals to handlers that will send signals to QML
     connect(&decoder, &QZXing::decodingStarted,
             this, &QZXingFilter::handleDecodingStarted);

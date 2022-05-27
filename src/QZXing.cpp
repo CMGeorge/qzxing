@@ -52,7 +52,7 @@ using namespace zxing;
 
 QZXing::QZXing(QObject *parent) : QObject(parent), tryHarder_(false), lastDecodeOperationSucceded_(false)
 {
-    qCritical() << "Will use" << VERSION << " - 1";
+    qCritical() << "Will use QZXing " << VERSION << " - 1";
     decoder = new MultiFormatReader();
     setDecoder(DecoderFormat_QR_CODE |
                DecoderFormat_DATA_MATRIX |

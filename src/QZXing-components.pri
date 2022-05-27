@@ -445,36 +445,37 @@ qzxing_qml {
         $$PWD/QZXingImageProvider.cpp
 }
 
-unix {
-    isEmpty(PREFIX) {
-        maemo5 {
-            PREFIX = /opt/usr
-        } else {
-            PREFIX = /usr
-        }
-    }
+#TODO: Use this for local build
+#unix {
+#    isEmpty(PREFIX) {
+#        maemo5 {
+#            PREFIX = /opt/usr
+#        } else {
+#            PREFIX = /usr
+#        }
+#    }
 
-    DEFINES += NOFMAXL
+#    DEFINES += NOFMAXL
 
-    contains( CONFIG, sailfishapp) {
-        DEFINES += Q_OS_SAILFISH
-    } else {
-        # Installation
-        headers.files = $$PWD/QZXing.h $$PWD/QZXing_global.h
-        headers.path = $$PREFIX/include
-        target.path = $$PREFIX/lib
-        INSTALLS += headers target
-    }
+#    contains( CONFIG, sailfishapp) {
+#        DEFINES += Q_OS_SAILFISH
+#    } else {
+#        # Installation
+#        headers.files = $$PWD/QZXing.h $$PWD/QZXing_global.h
+#        headers.path = $$PREFIX/include
+#        target.path = $$PREFIX/lib
+#        INSTALLS += headers target
+#    }
 
 
-    # pkg-config support
-    CONFIG += create_pc create_prl no_install_prl
-    QMAKE_PKGCONFIG_DESTDIR = pkgconfig
-    QMAKE_PKGCONFIG_LIBDIR = ${prefix}/lib
-    QMAKE_PKGCONFIG_INCDIR = ${prefix}/include
+#    # pkg-config support
+#    CONFIG += create_pc create_prl no_install_prl
+#    QMAKE_PKGCONFIG_DESTDIR = pkgconfig
+#    QMAKE_PKGCONFIG_LIBDIR = ${prefix}/lib
+#    QMAKE_PKGCONFIG_INCDIR = ${prefix}/include
 
-    unix:QMAKE_CLEAN += -r pkgconfig lib$${TARGET}.prl
-}
+#    unix:QMAKE_CLEAN += -r pkgconfig lib$${TARGET}.prl
+#}
 
 win32-msvc*{
     DEFINES += __STDC_LIMIT_MACROS
