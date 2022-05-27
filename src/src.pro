@@ -24,7 +24,7 @@ CONFIG += \
           #staticlib \
           qzxing_qml \
           qzxing_multimedia
-
+DEFINES +=QZXING_QML QZXING_MULTIMEDIA
 VERSION = 3.3
 DEFINES +=VERSION=$$VERSION
 TARGET = qzxing
@@ -33,6 +33,9 @@ TARGET = qzxing
 include(QZXing-components.pri)
 MODULE=qzxing
 #DEFINES -= DISABLE_LIBRARY_FEATURES
+
+load(qt_module)
+
 
 load(qt_module)
 

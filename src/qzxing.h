@@ -152,7 +152,7 @@ public:
 private:
     QVariantMap metadataToMap(const zxing::ResultMetadata& metadata);
 
-public slots:
+public Q_SLOTS:
     /**
       * The decoding function. Will try to decode the given image based on the enabled decoders.
       * If the image width is larger than maxWidth or image height is larger
@@ -237,7 +237,7 @@ public slots:
       */
     void setDecoder(const uint &hint);
 
-signals:
+Q_SIGNALS:
     void decodingStarted();
     void decodingFinished(bool succeeded);
     void enabledFormatsChanged();

@@ -31,7 +31,7 @@ INCLUDEPATH += $$PWD/zxing/zxing/common/
 HEADERS += $$PWD/qzxing_global.h \
     $$PWD/CameraImageWrapper.h \
     $$PWD/ImageHandler.h \
-    $$PWD/QZXing.h \
+    $$PWD/qzxing.h \
     $$PWD/zxing/zxing/ZXing.h \
     $$PWD/zxing/zxing/IllegalStateException.h \
     $$PWD/zxing/zxing/InvertedLuminanceSource.h \

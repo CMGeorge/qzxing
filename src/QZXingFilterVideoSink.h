@@ -20,7 +20,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QFuture>
-#include "QZXing.h"
+#include "qzxing.h"
 #include <QtMultimedia/QVideoSink>
 #include <QtMultimedia/QVideoFrame>
 
