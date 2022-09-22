@@ -502,3 +502,6 @@ win32-g++{
 winrt {
     DEFINES += NO_ICONV
 }
+
+#load(qt_module)
+

@@ -41,7 +41,7 @@ class QZXingFilter : public QObject
     void captureRectChanged();
     void orientationChanged(int orientation);
 
-private slots:
+    private Q_SLOTS:
     void handleDecodingStarted();
     void handleDecodingFinished(bool succeeded);
     void processFrame(const QVideoFrame &frame);

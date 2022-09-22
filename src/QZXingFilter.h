@@ -84,7 +84,7 @@ class QZXingFilter : public QAbstractVideoFilter
         void captureRectChanged();
         void orientationChanged(int orientation);
 
-    private slots:
+    private Q_SLOTS:
         void handleDecodingStarted();
         void handleDecodingFinished(bool succeeded);
         void setOrientation(int orientation);
