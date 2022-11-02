@@ -44,7 +44,7 @@ HEADERS += $$PWD/qzxing_global.h \
     $$PWD/zxing/zxing/Reader.h \
     $$PWD/zxing/zxing/NotFoundException.h \
     $$PWD/zxing/zxing/MultiFormatReader.h \
-    $$PWD/zxing/zxing/LuminanceSource.h \
+    $$PWD/zxing/zxing/luminancesource.h \
     $$PWD/zxing/zxing/FormatException.h \
     $$PWD/zxing/zxing/Exception.h \
     $$PWD/zxing/zxing/DecodeHints.h \
@@ -414,20 +414,20 @@ qzxing_multimedia {
     DEFINES += QZXING_MULTIMEDIA
     PRL_EXPORT_DEFINES += QZXING_MULTIMEDIA
 
-   lessThan(QT_VERSION, 6.2) {
-        HEADERS += \
-            $$PWD/QZXingFilter.h
+#   lessThan(QT_VERSION, 6.2) {
+#        HEADERS += \
+#            $$PWD/QZXingFilter.h
 
-        SOURCES += \
-          $$PWD/QZXingFilter.cpp
-  }
-  greaterThan(QT_VERSION, 6.1) {
+#        SOURCES += \
+#          $$PWD/QZXingFilter.cpp
+#  }
+#  greaterThan(QT_VERSION, 6.1) {
     QT += concurrent
     HEADERS += \
         $$PWD/QZXingFilterVideoSink.h
     SOURCES += \
         $$PWD/QZXingFilterVideoSink.cpp
-  }
+#  }
 }
 
 qzxing_qml {

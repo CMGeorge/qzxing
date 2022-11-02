@@ -34,7 +34,7 @@ class QZXingFilter : public QObject
         Q_PROPERTY(QObject* videoSink WRITE setVideoSink)
         Q_PROPERTY(int orientation READ orientation WRITE setOrientation NOTIFY orientationChanged)
 
-        signals:
+        Q_SIGNALS:
                   void isDecodingChanged();
     void decodingFinished(bool succeeded, int decodeTime);
     void decodingStarted();
