@@ -28,7 +28,7 @@ class ImageHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit ImageHandler(QObject *parent = 0);
+    explicit ImageHandler(QObject *parent = nullptr);
 
     QImage extractQImage(QObject *imageObj,
                          int offsetX = 0, int offsetY = 0,

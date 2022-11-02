@@ -24,7 +24,7 @@ class QZXingImageProvider : public QQuickImageProvider
 {
 public:
     QZXingImageProvider();
-    QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize);
+    QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override;
 };
 
 #endif // QZXINGIMAGEPROVIDER_H

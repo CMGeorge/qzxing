@@ -1,7 +1,7 @@
 #include "QZXingImageProvider.h"
 #include <QDebug>
 #include <QUrlQuery>
-#include "QZXing.h"
+#include "qzxing.h"
 #include <QRegularExpression>
 
 QZXingImageProvider::QZXingImageProvider() : QQuickImageProvider(QQuickImageProvider::Image)
