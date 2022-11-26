@@ -38,14 +38,14 @@ public:
   GreyscaleLuminanceSource(QSharedPointer<std::vector<zxing::byte>> greyData, int dataWidth, int dataHeight, int left,
                            int top, int width, int height);
 
-  QSharedPointer<std::vector<zxing::byte>> getRow(int y, QSharedPointer<std::vector<zxing::byte>> row) const override;
-  QSharedPointer<std::vector<zxing::byte>> getMatrix() const override;
+  QSharedPointer<std::vector<zxing::byte>> getRow(int y, QSharedPointer<std::vector<zxing::byte>> row) const;
+  QSharedPointer<std::vector<zxing::byte>> getMatrix() const;
 
-  bool isRotateSupported() const override {
+  bool isRotateSupported() const {
     return true;
   }
 
-  QSharedPointer<LuminanceSource> rotateCounterClockwise() const override;
+  QSharedPointer<LuminanceSource> rotateCounterClockwise() const;
 };
 
 }

@@ -36,14 +36,14 @@ public:
     QSharedPointer<std::vector<QSharedPointer<std::vector<zxing::byte>> > > getOriginalImage();
     QSharedPointer<GreyscaleLuminanceSource> getDelegate() { return delegate; }
 
-    QSharedPointer<std::vector<zxing::byte>> getRow(int y, QSharedPointer<std::vector<zxing::byte>> row) const override;
-    QSharedPointer<std::vector<zxing::byte>> getMatrix() const override;
+    QSharedPointer<std::vector<zxing::byte>> getRow(int y, QSharedPointer<std::vector<zxing::byte>> row) const;
+    QSharedPointer<std::vector<zxing::byte>> getMatrix() const;
 
-    bool isCropSupported() const override;
-    QSharedPointer<LuminanceSource> crop(int left, int top, int width, int height) const override;
-    bool isRotateSupported() const override;
-    QSharedPointer<LuminanceSource> invert() const override;
-    QSharedPointer<LuminanceSource> rotateCounterClockwise() const override;
+    bool isCropSupported() const;
+    QSharedPointer<LuminanceSource> crop(int left, int top, int width, int height) const;
+    bool isRotateSupported() const;
+    QSharedPointer<LuminanceSource> invert() const;
+    QSharedPointer<LuminanceSource> rotateCounterClockwise() const;
 
     inline zxing::byte gray(const unsigned int r, const unsigned int g, const unsigned int b);
   
