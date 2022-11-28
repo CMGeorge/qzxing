@@ -19,8 +19,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#include <luminancesource.h>
+//Fix 5.15.2 compilation
+#include "../luminancesource.h"
+//#include <luminancesource.h>
 
 namespace zxing {
 

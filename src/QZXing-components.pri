@@ -457,6 +457,10 @@ qzxing_qml {
 
 #    DEFINES += NOFMAXL
 
+    contains( CONFIG, ubports) {
+        DEFINES += Q_OS_UBUNTUTOUCH
+    }
+
 #    contains( CONFIG, sailfishapp) {
 #        DEFINES += Q_OS_SAILFISH
 #    } else {

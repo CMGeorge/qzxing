@@ -33,7 +33,9 @@ TARGET = qzxing
 include(QZXing-components.pri)
 MODULE=qzxing
 #DEFINES -= DISABLE_LIBRARY_FEATURES
-
+android{
+#    ANDROID_ABIS = armeabi-v7a arm64-v8a x86 x86_64
+}
 load(qt_module)
 
 
