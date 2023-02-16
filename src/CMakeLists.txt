@@ -137,6 +137,8 @@ target_include_directories(qzxing
 set(QZXing_PUBLIC_HEADERS CameraImageWrapper.h
     ImageHandler.h
     QZXing.h
+    qzxing_global.h
+
 )
 
 set_target_properties(qzxing PROPERTIES PUBLIC_HEADER "${QZXing_PUBLIC_HEADERS}")
