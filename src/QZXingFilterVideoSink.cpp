@@ -1,7 +1,7 @@
 #include "QZXingFilterVideoSink.h"
 #include <QDebug>
 #include <QtConcurrent/QtConcurrent>
-#include "QZXingImageProvider.h"
+//#include "QZXingImageProvider.h"
 
 QZXingFilter::QZXingFilter(QObject *parent)
     : QObject(parent)

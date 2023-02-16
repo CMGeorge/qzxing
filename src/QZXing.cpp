@@ -8,7 +8,7 @@
 #include <zxing/ResultMetadata.h>
 #include <zxing/common/detector/WhiteRectangleDetector.h>
 #include <zxing/InvertedLuminanceSource.h>
-#include "cameraimagewrapper.h"
+#include "CameraImageWrapper.h"
 #include "imagehandler.h"
 #include <QTime>
 #include <QUrl>

@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-#include <zxing/common/GreyscaleLuminanceSource.h>
+#include <zxing/common/greyscaleluminancesource.h>
 #include <zxing/common/GreyscaleRotatedLuminanceSource.h>
 #include <zxing/common/IllegalArgumentException.h>
 

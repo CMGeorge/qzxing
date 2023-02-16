@@ -19,7 +19,7 @@
 
 #include <QImage>
 #include <QString>
-#include <zxing/zxing/common/GreyscaleLuminanceSource.h>
+#include "zxing/zxing/common/greyscaleluminancesource.h"
 
 using namespace zxing;
 

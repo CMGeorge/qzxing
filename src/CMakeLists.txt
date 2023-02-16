@@ -26,7 +26,8 @@ set(SOURCES
 
 if(QZXING_MULTIMEDIA)
 
-    LIST(APPEND SOURCES QZXingFilter.cpp QZXingFilter.h)
+    #Qt5: LIST(APPEND SOURCES QZXingFilter.cpp QZXingFilter.h)
+    LIST(APPEND SOURCES QZXingFilterVideoSink.cpp QZXingFilterVideoSink.h)
     add_definitions(-DQZXING_MULTIMEDIA)
 
     SET(QZXING_USE_QML ON)
