@@ -1,4 +1,4 @@
-#include "cameraimagewrapper.h"
+#include "CameraImageWrapper.h"
 #include <QColor>
 
 //values based on http://entropymine.com/imageworsener/grayscale/
