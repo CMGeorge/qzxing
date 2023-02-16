@@ -44,6 +44,10 @@ if(QZXING_USE_ENCODER)
 endif(QZXING_USE_ENCODER)
 
 add_library(qzxing "" ${SOURCES})
+install(TARGETS qzxing LIBRARY DESTINATION "lib"
+                      ARCHIVE DESTINATION "lib"
+                      RUNTIME DESTINATION "bin"
+                      COMPONENT library)
 #TODO: Forced this on MAC.. Jack why...
 if (APPLE)
 add_definitions(-DNO_ICONV)
@@ -129,4 +133,5 @@ target_include_directories(qzxing
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
+
 
