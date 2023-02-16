@@ -1,0 +1,31 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/QZXing.cmake")
+
+set(QZXing_INCLUDE_DIRS "@PACKAGE_INCLUDE_DIRS@")
+set(QZXing_LIBRARIES "@PACKAGE_LIBRARIES@")
+
+# Handle dependencies
+foreach(lib ${QZXing_LIBRARIES})
+    find_package(${lib} REQUIRED)
+endforeach()
+
+# Create an imported target for the library
+add_library(QZXing::qzxing INTERFACE IMPORTED)
+set_target_properties(QZXing::qzxing PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${QZXing_INCLUDE_DIRS}"
+    INTERFACE_LINK_LIBRARIES "${QZXing_LIBRARIES}")
+
+# Add the library alias
+add_library(QZXing::QZXing ALIAS QZXing::qzxing)
+
+# Provide configuration-specific information
+if(CMAKE_VERSION VERSION_LESS 3.7.0)
+    set(QZXing_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}")
+else()
+    set(QZXing_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/QZXing")
+endif()
+
+configure_file("${QZXing_CMAKE_DIR}/QZXing.cmake.in"
+    "${QZXing_CMAKE_DIR}/QZXing.cmake"
+    @ONLY)

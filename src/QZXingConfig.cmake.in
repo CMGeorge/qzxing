@@ -1,0 +1,5 @@
+# Configuration file for the mylib package
+include("${CMAKE_CURRENT_LIST_DIR}/QZXingTargets.cmake")
+
+set(QZXING_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include")
+set(QZING_LIBRARIES qzxing)

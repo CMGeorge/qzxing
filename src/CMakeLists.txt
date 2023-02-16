@@ -10,6 +10,7 @@ SET(BIGINT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/zxing/bigint)
 SET(WIN32_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/zxing/win32/zxing)
 SET(ZXING_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/zxing/zxing)
 
+SET(PROJECT_VERSION "3.3")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_WARN_ON)
 
@@ -22,7 +23,7 @@ set(SOURCES
     QZXing.cpp
     QZXing.h
     QZXing_global.h
-    )
+)
 
 if(QZXING_MULTIMEDIA)
 
@@ -45,12 +46,12 @@ endif(QZXING_USE_ENCODER)
 
 add_library(qzxing "" ${SOURCES})
 install(TARGETS qzxing LIBRARY DESTINATION "lib"
-                      ARCHIVE DESTINATION "lib"
-                      RUNTIME DESTINATION "bin"
-                      COMPONENT library)
+    ARCHIVE DESTINATION "lib"
+    RUNTIME DESTINATION "bin"
+    COMPONENT library)
 #TODO: Forced this on MAC.. Jack why...
 if (APPLE)
-add_definitions(-DNO_ICONV)
+    add_definitions(-DNO_ICONV)
 endif()
 
 if(WIN32)
@@ -124,14 +125,64 @@ target_compile_definitions(qzxing PUBLIC DISABLE_LIBRARY_FEATURES)
 
 # Target includes
 target_include_directories(qzxing
-  PRIVATE
-        .
-        zxing
-        zxing/win32/zxing
-        zxing/zxing
-        zxing/bigint
+    PRIVATE
+    .
+    zxing
+    zxing/win32/zxing
+    zxing/zxing
+    zxing/bigint
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
+set(QZXing_PUBLIC_HEADERS CameraImageWrapper.h
+    ImageHandler.h
+    QZXing.h
+)
 
+set_target_properties(qzxing PROPERTIES PUBLIC_HEADER "${QZXing_PUBLIC_HEADERS}")
+
+install(TARGETS qzxing
+    EXPORT qzxingTargets
+    LIBRARY DESTINATION "lib"
+    ARCHIVE DESTINATION "lib"
+    RUNTIME DESTINATION "bin"
+    PUBLIC_HEADER DESTINATION "include/QZXing"
+    #                      COMPONENT library
+)
+install(EXPORT qzxingTargets
+    FILE qzxingTargets.cmake
+    NAMESPACE QZXing::
+    DESTINATION lib/cmake/QZXing
+)
+
+# Create a version file
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file("QZXing.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+# Create a config file
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/QZXing.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/QZXing.cmake"
+    INSTALL_DESTINATION "lib/cmake/QZXing"
+    NO_SET_AND_CHECK_MACRO
+)
+
+# Install the config and version files
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/QZXing.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/QZXing.cmake"
+    DESTINATION "lib/cmake/QZXing"
+)
+
+
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/QZXingConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/QZXingConfig.cmake"
+    INSTALL_DESTINATION "lib/cmake/QZXing"
+    NO_SET_AND_CHECK_MACRO
+)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/QZXingConfig.cmake"
+    DESTINATION "lib/cmake/QZXing"
+)
+#install(TARGETS qzxing PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/qzxing")
 
