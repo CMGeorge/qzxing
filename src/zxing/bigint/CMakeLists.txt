@@ -1,4 +1,6 @@
-SET(SOURCES
+#set(CMP0100 NEW)
+
+SET(BIG_INT_SOURCES
      ${BIGINT_DIR}/BigInteger.hh
      ${BIGINT_DIR}/BigInteger.cc
      ${BIGINT_DIR}/BigIntegerAlgorithms.hh
@@ -12,5 +14,10 @@ SET(SOURCES
      ${BIGINT_DIR}/BigUnsignedInABase.cc
      ${BIGINT_DIR}/NumberlikeArray.hh
     )
-
-target_sources(qzxing PRIVATE ${SOURCES})
+set_property(
+    SOURCE
+        ${BIG_INT_SOURCES}
+    PROPERTY
+        SKIP_AUTOMOC ON
+)
+target_sources(qzxing PRIVATE ${BIG_INT_SOURCES})
