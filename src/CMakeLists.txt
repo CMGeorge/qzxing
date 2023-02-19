@@ -115,11 +115,6 @@ if(QZXING_USE_DECODER_PDF17)
     target_compile_definitions(qzxing PRIVATE -DENABLE_DECODER_PDF17)
 endif()
 
-if(QZXING_USE_DECODER_1D_BARCODES)
-    target_compile_definitions(qzxing PRIVATE -DENABLE_DECODER_1D_BARCODES)
-endif()
-
-
 # Change Global Definitions depending on how you want to use the library
 target_compile_definitions(qzxing PUBLIC DISABLE_LIBRARY_FEATURES)
 

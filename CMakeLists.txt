@@ -7,6 +7,12 @@ set(CMAKE_WARN_ON)
 #if build example...
 #add_compile_definitions(-DQZXING_USE_QML)
 set(QZXING_MULTIMEDIA ON)
-
+set(QZXING_USE_ENCODER ON)
+#DECODE QR_CODE
+set(QZXING_USE_DECODER_QR_CODE ON)
+set(QZXING_USE_DECODER_1D_BARCODES ON)
+set(QZXING_USE_DECODER_DATA_MATRIX ON)
+set(QZXING_USE_DECODER_AZTEC ON)
+set(QZXING_USE_DECODER_PDF17 ON)
 add_subdirectory(src)
 add_subdirectory(examples)
