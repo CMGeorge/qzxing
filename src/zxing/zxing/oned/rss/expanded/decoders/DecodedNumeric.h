@@ -29,6 +29,7 @@
  *   http://www.piramidepse.com/
  */
 
+#include <QSharedPointer>
 #include "DecodedObject.h"
 
 #include <zxing/FormatException.h>

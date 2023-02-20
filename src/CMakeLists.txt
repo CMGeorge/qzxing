@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.3)
 project(QZXing)
 
-find_package(Qt6 COMPONENTS Core REQUIRED)
+find_package(Qt6 COMPONENTS Core  REQUIRED)
+
 find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Multimedia )
 find_package(Qt6 REQUIRED Svg Quick QuickControls2)
@@ -75,7 +76,10 @@ add_subdirectory(zxing/bigint)
 
 add_subdirectory(zxing/zxing)
 
-target_link_libraries(qzxing Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui)
+target_link_libraries(qzxing
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::CorePrivate
+    Qt${QT_VERSION_MAJOR}::Gui)
 message(Multimedia? ${QZXING_MULTIMEDIA})
 if(QZXING_MULTIMEDIA)
     target_link_libraries(qzxing Qt${QT_VERSION_MAJOR}::Multimedia)

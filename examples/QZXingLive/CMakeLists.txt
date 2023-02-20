@@ -37,3 +37,21 @@ target_link_libraries(QZXingLive PRIVATE
     Qt${QT_VERSION_MAJOR}::Svg
     qzxing
 )
+if(ANDROID)
+    SET(QT_ANDROID_PLATFORM 23)
+    # Set the location of the Java source files
+#    set(QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android/")
+    message("Setting extra target properties")
+    set_target_properties(QZXingLive PROPERTIES
+        ANDROID_MANIFEST ${CMAKE_CURRENT_SOURCE_DIR}/android/AndroidManifest.xml
+        ANDROID_RES_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/android/res/
+        QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android/
+    )
+message("Se path ${CMAKE_CURRENT_SOURCE_DIR}/android/ as android files location")
+#set_property(TARGET QZXingLive APPEND
+#    PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#        ${CMAKE_CURRENT_SOURCE_DIR}/android/
+#    )
+    qt_android_generate_deployment_settings(QZXingLive)
+
+endif()

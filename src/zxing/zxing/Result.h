@@ -23,7 +23,7 @@
 #include <string>
 #include <QSharedPointer>
 #include <zxing/common/Str.h>
-#include <zxing/common/types.h>
+#include <zxing/common/Types.h>
 #include <zxing/ResultPoint.h>
 #include <zxing/ResultMetadata.h>
 #include <zxing/BarcodeFormat.h>

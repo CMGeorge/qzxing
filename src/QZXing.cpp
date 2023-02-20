@@ -8,7 +8,7 @@
 #include <zxing/ResultMetadata.h>
 #include <zxing/common/detector/WhiteRectangleDetector.h>
 #include <zxing/InvertedLuminanceSource.h>
-#include "CameraImageWrapper.h"
+#include "cameraimagewrapper.h"
 #include "imagehandler.h"
 #include <QTime>
 #include <QUrl>
@@ -44,7 +44,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQuickImageProvider>
-#include "qzxingimageprovider.h"
+#include "QZXingImageProvider.h"
 #endif //QZXING_QML
 
 

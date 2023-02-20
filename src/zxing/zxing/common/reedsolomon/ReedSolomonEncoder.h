@@ -3,7 +3,7 @@
 
 #include <zxing/common/reedsolomon/GenericGFPoly.h>
 #include <zxing/common/reedsolomon/GenericGF.h>
-#include <zxing/common/types.h>
+#include <zxing/common/Types.h>
 
 namespace zxing {
 

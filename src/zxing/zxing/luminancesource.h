@@ -22,7 +22,7 @@
 
 #include <QSharedPointer>
 #include <string.h>
-#include "common/types.h"
+#include "common/Types.h"
 
 namespace zxing {
 

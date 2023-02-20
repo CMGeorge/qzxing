@@ -19,6 +19,7 @@
  */
 
 #include <zxing/ZXing.h>
+#include <common/Types.h>
 #include <QSharedPointer>
 #include <zxing/common/IllegalArgumentException.h>
 #include <vector>

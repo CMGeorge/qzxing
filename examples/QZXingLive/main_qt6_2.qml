@@ -63,7 +63,7 @@ ApplicationWindow
         anchors.bottom: text2.top
         anchors.left: parent.left
         anchors.right: parent.right
-       // fillMode: VideoOutput.Stretch
+        fillMode: VideoOutput.Stretch
 
         property double captureRectStartFactorX: 0.25
         property double captureRectStartFactorY: 0.25
@@ -95,18 +95,19 @@ ApplicationWindow
     {
         id: zxingFilter
         videoSink: videoOutput.videoSink
-        orientation: videoOutput.orientation
+//        orientation: videoOutput.orientation
 
         captureRect: {
             videoOutput.sourceRect;
-            return Qt.rect(videoOutput.sourceRect.width * videoOutput.captureRectStartFactorX,
-                           videoOutput.sourceRect.height * videoOutput.captureRectStartFactorY,
-                           videoOutput.sourceRect.width * videoOutput.captureRectFactorWidth,
-                           videoOutput.sourceRect.height * videoOutput.captureRectFactorHeight)
+            return Qt.rect(videoOutput.sourceRect.width,// * videoOutput.captureRectStartFactorX,
+                           videoOutput.sourceRect.height,// * videoOutput.captureRectStartFactorY,
+                           videoOutput.sourceRect.width,// * videoOutput.captureRectFactorWidth,
+                           videoOutput.sourceRect.height// * videoOutput.captureRectFactorHeight
+                           )
         }
 
         decoder {
-            enabledDecoders: QZXing.DecoderFormat_EAN_13 | QZXing.DecoderFormat_CODE_39 | QZXing.DecoderFormat_QR_CODE
+            enabledDecoders: /*QZXing.DecoderFormat_EAN_13 | QZXing.DecoderFormat_CODE_39 | */QZXing.DecoderFormat_QR_CODE
 
             onTagFound: {
                 console.log(tag + " | " + decoder.foundedFormat() + " | " + decoder.charSet());
@@ -115,7 +116,7 @@ ApplicationWindow
                 window.lastTag = tag;
             }
 
-            tryHarder: false
+            tryHarder: true
         }
 
         onDecodingStarted:

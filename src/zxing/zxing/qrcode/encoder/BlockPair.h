@@ -2,7 +2,7 @@
 #define BLOCKPAIR_H
 
 #include <vector>
-#include <zxing/common/types.h>
+#include <zxing/common/Types.h>
 
 using namespace std;
 
