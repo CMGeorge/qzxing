@@ -125,7 +125,7 @@ if(QZXING_USE_DECODER_PDF17)
 endif()
 
 # Change Global Definitions depending on how you want to use the library
-target_compile_definitions(qzxing PUBLIC DISABLE_LIBRARY_FEATURES)
+#target_compile_definitions(qzxing PUBLIC DISABLE_LIBRARY_FEATURES)
 
 # Target includes
 target_include_directories(qzxing
