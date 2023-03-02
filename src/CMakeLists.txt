@@ -15,6 +15,10 @@ SET(PROJECT_VERSION "3.3")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_WARN_ON)
 
+if (BUILD_SHARED_LIBS)
+    add_definitions(-DQZXING_LIBRARY)
+endif()
+
 set(SOURCES
 
     CameraImageWrapper.cpp
