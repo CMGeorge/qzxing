@@ -3,7 +3,7 @@ project(QZXing)
 
 find_package(Qt6 COMPONENTS Core REQUIRED)
 
-if(NOT ${Qt6Core_VERSION} VERSION_EQUAL 6.3.0)
+if(ANDROID AND (NOT ${Qt6Core_VERSION} VERSION_EQUAL 6.3.0))
 message(FATAL_ERROR "Version 6.3.0 looks to be the only one version for android which works with camera.
 PLEASE USE THAT VERSION UNTIL FUTURE NOTICE!!!!
 After this version camera is not correctly displayed.
