@@ -24,10 +24,8 @@ set(SOURCES
 
     CameraImageWrapper.cpp
     CameraImageWrapper.h
-    ImageHandler.cpp
-    ImageHandler.h
-    QZXing.cpp
-    QZXing.h
+    imagehandler.h mageHandler.cpp
+    qzxing.h QZXing.cpp
     QZXing_global.h
 )
 
@@ -84,7 +82,9 @@ add_subdirectory(zxing/zxing)
 target_link_libraries(qzxing
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::CorePrivate
-    Qt${QT_VERSION_MAJOR}::Gui)
+    Qt${QT_VERSION_MAJOR}::Gui
+
+)
 message(Multimedia? ${QZXING_MULTIMEDIA})
 if(QZXING_MULTIMEDIA)
     target_link_libraries(qzxing Qt${QT_VERSION_MAJOR}::Multimedia)

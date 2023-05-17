@@ -31,7 +31,7 @@ class QZXingFilter : public QObject
     Q_PROPERTY(bool decoding READ isDecoding NOTIFY isDecodingChanged)
         Q_PROPERTY(QZXing* decoder READ getDecoder)
         Q_PROPERTY(QRectF captureRect MEMBER captureRect NOTIFY captureRectChanged)
-        Q_PROPERTY(QObject* videoSink WRITE setVideoSink)
+        Q_PROPERTY(QVideoSink* videoSink WRITE setVideoSink)
         Q_PROPERTY(int orientation READ orientation WRITE setOrientation NOTIFY orientationChanged)
 
         Q_SIGNALS:
@@ -44,7 +44,7 @@ class QZXingFilter : public QObject
     private Q_SLOTS:
     void handleDecodingStarted();
     void handleDecodingFinished(bool succeeded);
-    void processFrame(const QVideoFrame &frame);
+    void processFrame(const QVideoFrame &f);
     void setOrientation(int orientation);
     int orientation() const;
 
@@ -61,7 +61,7 @@ private: /// Attributes
 
 public:  /// Methods
     explicit QZXingFilter(QObject *parent = 0);
-    void setVideoSink(QObject *videoSink);
+    void setVideoSink(QVideoSink *videoSink);
     virtual ~QZXingFilter();
 
     bool isDecoding() {return decoding; }
