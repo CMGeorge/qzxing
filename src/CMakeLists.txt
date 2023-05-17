@@ -22,11 +22,10 @@ endif()
 
 set(SOURCES
 
-    CameraImageWrapper.cpp
-    CameraImageWrapper.h
-    imagehandler.h mageHandler.cpp
+    cameraimagewrapper.h CameraImageWrapper.cpp
+    imagehandler.h ImageHandler.cpp
     qzxing.h QZXing.cpp
-    QZXing_global.h
+    qzxing_global.h
 )
 
 if(QZXING_MULTIMEDIA)
