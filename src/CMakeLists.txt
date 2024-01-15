@@ -1,10 +1,9 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.16)
 project(QZXing)
 
-find_package(Qt NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt NAMES Qt6 Qt5 COMPONENTS Gui REQUIRED)
-find_package(Qt NAMES Qt6 Qt5 COMPONENTS Multimedia )
-find_package(Qt NAMES Qt6 Qt5 REQUIRED Svg Quick QuickControls2)
+find_package(Qt6 COMPONENTS Core REQUIRED)
+find_package(Qt6 COMPONENTS Gui REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Svg Quick QuickControls2)
 
 SET(BIGINT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/zxing/bigint)
 SET(WIN32_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/zxing/win32/zxing)
@@ -25,10 +24,12 @@ set(SOURCES
     )
 
 if(QZXING_MULTIMEDIA)
-    if (QT_VERSION VERSION_LESS 6.2)
+    find_package(Qt6 COMPONENTS Multimedia REQUIRED)
+
+    if (Qt6_VERSION VERSION_LESS 6.2)
         LIST(APPEND SOURCES QZXingFilter.cpp QZXingFilter.h)
     endif()
-    if (QT_VERSION VERSION_GREATER_EQUAL 6.1)
+    if (Qt6_VERSION VERSION_GREATER_EQUAL 6.1)
         LIST(APPEND SOURCES QZXingFilterVideoSink.cpp QZXingFilterVideoSink.h)
     endif()
 
@@ -70,22 +71,22 @@ add_subdirectory(zxing/bigint)
 
 add_subdirectory(zxing/zxing)
 
-target_link_libraries(qzxing Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui)
+target_link_libraries(qzxing Qt6::Core Qt6::Gui)
 
 if(QZXING_MULTIMEDIA)
-    target_link_libraries(qzxing Qt${QT_VERSION_MAJOR}::Multimedia)
+    target_link_libraries(qzxing Qt6::Multimedia)
     target_compile_definitions(qzxing PUBLIC -DQZXING_MULTIMEDIA)
 endif(QZXING_MULTIMEDIA)
 
 if(QZXING_USE_QML)
-    if (QT_VERSION VERSION_LESS 6.0)
+    if (Qt6_VERSION VERSION_LESS 6.0)
         target_link_libraries(qzxing
-            Qt${QT_VERSION_MAJOR}::Svg
-            Qt${QT_VERSION_MAJOR}::Quick
-            Qt${QT_VERSION_MAJOR}::QuickControls2)
+            Qt6::Svg
+            Qt6::Quick
+            Qt6::QuickControls2)
     else()
         target_link_libraries(qzxing
-            Qt${QT_VERSION_MAJOR}::Quick)
+            Qt6::Quick)
     endif()
     target_compile_definitions(qzxing PUBLIC -DQZXING_QML)
 endif(QZXING_USE_QML)
