@@ -14,3 +14,5 @@ SET(SOURCES
     )
 
 target_sources(qzxing PRIVATE ${SOURCES})
+
+set_property(SOURCE ${SOURCES} DIRECTORY ../../ PROPERTY SKIP_AUTOGEN ON)
