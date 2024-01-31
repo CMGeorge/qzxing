@@ -37,8 +37,10 @@ void Application::initializeQML()
 {
 #if QT_VERSION < 0x060200
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-#else
+#elif QT_VERSION < 0x060500
     engine.load(QUrl(QStringLiteral("qrc:/main_qt6_2.qml")));
+#else
+    engine.load(QUrl(QStringLiteral("qrc:/main_qt6_5_fix.qml")));
 #endif // QT_VERSION < 0x060200
 }
 

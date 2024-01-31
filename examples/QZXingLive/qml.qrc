@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>main_qt6_2.qml</file>
+        <file>main_qt6_5_fix.qml</file>
+        <file>Qt65CameraController.qml</file>
     </qresource>
 </RCC>
