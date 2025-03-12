@@ -1,9 +1,9 @@
-import QtQuick 2.5
-import QtQuick.Window 2.0
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.1
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
 import QtMultimedia
-
+// import QtCore
 
 
 ApplicationWindow
@@ -16,7 +16,9 @@ ApplicationWindow
 
     property int detectedTags: 0
     property string lastTag: ""
-
+    // CameraPermission{
+    //     id: camPermision
+    // }
     Rectangle
     {
         id: bgRect
@@ -151,5 +153,10 @@ ApplicationWindow
            camLoader.item.camera.start()
        }
     }
+
+    // Component.onCompleted: {
+    //     console.debug("CAm status: ",camPermision.status)
+    //     camPermision.request();
+    // }
 
 }

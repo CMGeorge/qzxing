@@ -1,5 +1,6 @@
 #include "application.h"
 #include <QDebug>
+#include <QCoreApplication>
 
 #if QT_VERSION < 0x060000
 #include "native.h"
@@ -17,6 +18,10 @@
 
 #endif // Q_OS_ANDROID
 
+#if QT_CONFIG(permissions)
+#include <QPermissions>
+#endif
+
 Application::Application()
 {
     //both signals will be connected to the same function for
@@ -31,6 +36,9 @@ Application::Application()
 #if QT_VERSION < 0x060000
   NativeHelpers::registerApplicationInstance(this);
 #endif
+    QCameraPermission permission;
+  qDebug()<<"Current permision is: "<<qApp->checkPermission(permission);
+    qApp->requestPermission(permission, this, [this](){});
 }
 
 void Application::initializeQML()
