@@ -48,6 +48,7 @@ if(QZXING_USE_ENCODER)
 endif(QZXING_USE_ENCODER)
 
 add_library(qzxing "" ${SOURCES})
+qt_add_ios_ffmpeg_libraries(qzxing)
 install(TARGETS qzxing LIBRARY DESTINATION "lib"
     ARCHIVE DESTINATION "lib"
     RUNTIME DESTINATION "bin"
@@ -79,14 +80,17 @@ add_subdirectory(zxing/bigint)
 add_subdirectory(zxing/zxing)
 
 target_link_libraries(qzxing
-    Qt${QT_VERSION_MAJOR}::Core
+    PRIVATE
+    # Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::CorePrivate
     Qt${QT_VERSION_MAJOR}::Gui
 
 )
 message(Multimedia? ${QZXING_MULTIMEDIA})
 if(QZXING_MULTIMEDIA)
-    target_link_libraries(qzxing Qt${QT_VERSION_MAJOR}::Multimedia)
+    target_link_libraries(qzxing
+        PRIVATE
+        Qt${QT_VERSION_MAJOR}::Multimedia)
     target_compile_definitions(qzxing PUBLIC -DQZXING_MULTIMEDIA)
 endif(QZXING_MULTIMEDIA)
 
