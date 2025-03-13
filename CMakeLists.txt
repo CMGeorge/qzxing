@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.24)
 project(QZXing)
 
+option(BUILD_EXAMPLES "Build example projects" OFF)
+
 find_package(Qt6 COMPONENTS Core REQUIRED)
 
 if(ANDROID AND (NOT ${Qt6Core_VERSION} VERSION_EQUAL 6.3.0))
@@ -26,4 +28,6 @@ set(QZXING_USE_DECODER_DATA_MATRIX ON)
 set(QZXING_USE_DECODER_AZTEC ON)
 set(QZXING_USE_DECODER_PDF17 ON)
 add_subdirectory(src)
-add_subdirectory(examples)
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
