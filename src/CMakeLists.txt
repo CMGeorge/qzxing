@@ -97,6 +97,7 @@ endif(QZXING_MULTIMEDIA)
 if(QZXING_USE_QML)
     message("Working")
     target_link_libraries(qzxing
+        PRIVATE
         Qt${QT_VERSION_MAJOR}::Svg
         Qt${QT_VERSION_MAJOR}::Quick
         Qt${QT_VERSION_MAJOR}::QuickControls2)

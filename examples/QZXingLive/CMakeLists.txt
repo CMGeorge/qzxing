@@ -38,7 +38,7 @@ target_link_libraries(QZXingLive PRIVATE
     qzxing
 )
 # if (QT_VERSION_MAJOR GREATER 6 OR (QT_VERSION_MAJOR EQUAL 6 AND QT_VERSION_MINOR GREATER_EQUAL 8))
-    qt_add_ios_ffmpeg_libraries(QZXingLive)
+    # qt_add_ios_ffmpeg_libraries(QZXingLive)
 # endif()
 if(ANDROID)
     SET(QT_ANDROID_PLATFORM 23)
