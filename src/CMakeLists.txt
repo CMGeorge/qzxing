@@ -48,9 +48,9 @@ if(QZXING_USE_ENCODER)
 endif(QZXING_USE_ENCODER)
 
 add_library(qzxing "" ${SOURCES})
-if (IOS AND COMMAND qt_add_ios_ffmpeg_libraries)
-    qt_add_ios_ffmpeg_libraries(qzxing)
-endif()
+# if (IOS AND COMMAND qt_add_ios_ffmpeg_libraries)
+#     qt_add_ios_ffmpeg_libraries(qzxing)
+# endif()
 install(TARGETS qzxing LIBRARY DESTINATION "lib"
     ARCHIVE DESTINATION "lib"
     RUNTIME DESTINATION "bin"
