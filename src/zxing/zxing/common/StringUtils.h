@@ -22,7 +22,7 @@
 #include <string>
 #include <map>
 #include <zxing/DecodeHints.h>
-#include <zxing/common/Types.h>
+#include <zxing/common/types.h>
 
 namespace zxing {
 namespace common {

@@ -3,7 +3,7 @@
 
 #include "TestCase.h"
 #include <zxing/common/BitArray.h>
-#include <zxing/common/Types.h>
+#include <zxing/common/types.h>
 #include <vector>
 
 namespace zxing{

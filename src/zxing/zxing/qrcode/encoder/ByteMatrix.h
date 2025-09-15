@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <QSharedPointer>
-#include <zxing/common/Types.h>
+#include <zxing/common/types.h>
 
 namespace zxing {
 namespace qrcode {

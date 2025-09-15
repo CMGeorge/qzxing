@@ -20,7 +20,7 @@
  * limitations under the License.
  */
 
-#include <zxing/common/Types.h>
+#include <zxing/common/types.h>
 
 namespace zxing {
 /**
