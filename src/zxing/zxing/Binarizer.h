@@ -20,7 +20,7 @@
  * limitations under the License.
  */
 
-#include <zxing/LuminanceSource.h>
+#include <zxing/luminancesource.h>
 #include <zxing/common/BitArray.h>
 #include <zxing/common/BitMatrix.h>
 #include <QSharedPointer>

@@ -21,7 +21,7 @@
  */
 
 
-#include <zxing/LuminanceSource.h>
+#include <zxing/luminancesource.h>
 
 namespace zxing {
 

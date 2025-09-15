@@ -93,7 +93,7 @@ SET(COMMON_DIR
     ${ZXING_DIR}/common/Str.h
     ${ZXING_DIR}/common/StringUtils.cpp
     ${ZXING_DIR}/common/StringUtils.h
-    ${ZXING_DIR}/common/Types.h
+    ${ZXING_DIR}/common/types.h
 
     ${ZXING_DIR}/common/detector/JavaMath.h
     ${ZXING_DIR}/common/detector/MathUtils.h

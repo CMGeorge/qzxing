@@ -1,4 +1,4 @@
-#include "QZXingImageProvider.h"
+#include "qzxingimageprovider.h"
 #include <QDebug>
 #include <QUrlQuery>
 #include "qzxing.h"

@@ -44,7 +44,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQuickImageProvider>
-#include "QZXingImageProvider.h"
+#include "qzxingimageprovider.h"
 #endif //QZXING_QML
 
 
